@@ -7,8 +7,8 @@
 <!-- the Compile on Save feature is turned off for the project. -->
 <!-- You can turn off the Compile on Save (or Deploy on Save) setting -->
 <!-- in the project's Project Properties dialog box.-->
-<project name="AuctionHouse-war" default="default" basedir=".">
-    <description>Builds, tests, and runs the project AuctionHouse-war.</description>
+<project name="AuctionPlace-war" default="default" basedir=".">
+    <description>Builds, tests, and runs the project AuctionPlace-war.</description>
     <import file="nbproject/build-impl.xml"/>
     <!--
 

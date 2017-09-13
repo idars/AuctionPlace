@@ -14,7 +14,7 @@ is divided into following sections:
   - cleanup
 
 -->
-<project xmlns:ear2="http://www.netbeans.org/ns/j2ee-earproject/2" basedir=".." default="default" name="AuctionHouse-impl">
+<project xmlns:ear2="http://www.netbeans.org/ns/j2ee-earproject/2" basedir=".." default="default" name="AuctionPlace-impl">
     <import file="ant-deploy.xml"/>
     <fail message="Please build using Ant 1.7.1 or higher.">
         <condition>
@@ -407,17 +407,17 @@ exists or setup the property manually. For example like this:
         <ear2:run-appclient subprojectname="${app.client}"/>
     </target>
     <target if="j2ee.appclient.mainclass.args" name="-as-retrieve-option-workaround" unless="j2ee.clientName">
-        <property name="client.jar" value="${dist.dir}/AuctionHouseClient.jar"/>
+        <property name="client.jar" value="${dist.dir}/AuctionPlaceClient.jar"/>
         <sleep seconds="3"/>
-        <copy failonerror="false" file="${wa.copy.client.jar.from}/AuctionHouse/AuctionHouseClient.jar" todir="${dist.dir}"/>
+        <copy failonerror="false" file="${wa.copy.client.jar.from}/AuctionPlace/AuctionPlaceClient.jar" todir="${dist.dir}"/>
         <copy failonerror="false" flatten="true" todir="${dist.dir}/">
-            <fileset dir="${wa.copy.client.jar.from}/AuctionHouse" includes="**/AuctionHouseClient.jar"/>
+            <fileset dir="${wa.copy.client.jar.from}/AuctionPlace" includes="**/AuctionPlaceClient.jar"/>
         </copy>
-        <copy flatten="true" todir="${dist.dir}/AuctionHouseClient">
-            <fileset dir="${wa.copy.client.jar.from}/AuctionHouse" includes="**/*.*ar"/>
+        <copy flatten="true" todir="${dist.dir}/AuctionPlaceClient">
+            <fileset dir="${wa.copy.client.jar.from}/AuctionPlace" includes="**/*.*ar"/>
         </copy>
-        <copy failonerror="false" flatten="false" todir="${dist.dir}/AuctionHouseClient">
-            <fileset dir="${dist.dir}/gfdeploy/AuctionHouse" includes="**/*.jar"/>
+        <copy failonerror="false" flatten="false" todir="${dist.dir}/AuctionPlaceClient">
+            <fileset dir="${dist.dir}/gfdeploy/AuctionPlace" includes="**/*.jar"/>
         </copy>
     </target>
     <target depends="init" name="-init-run-macros">
