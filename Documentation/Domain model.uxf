@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>13</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>845</x>
+      <y>442</y>
+      <w>234</w>
+      <h>156</h>
+    </coordinates>
+    <panel_attributes>_Bid_
+--
+amount: Double
+maxAmount: Double
+automaticBiding: Boolean</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>13</x>
+      <y>416</y>
+      <w>312</w>
+      <h>208</h>
+    </coordinates>
+    <panel_attributes>_Product_
+--
+name: String
+picture: String
+features: String
+rating: Double
+status: {unpublished, published, sold}
+whenBiddingClose: DateTime</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>702</x>
+      <y>13</y>
+      <w>195</w>
+      <h>221</h>
+    </coordinates>
+    <panel_attributes>_Customer_
+--
+name: String
+phone: String
+email: String
+rating: Double
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>65</x>
+      <y>78</y>
+      <w>663</w>
+      <h>364</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=n
+has &lt;</panel_attributes>
+    <additional_attributes>490.0;20.0;10.0;20.0;10.0;260.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>845</x>
+      <y>221</y>
+      <w>104</w>
+      <h>247</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=n
+gives &gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;170.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>312</x>
+      <y>507</y>
+      <w>559</w>
+      <h>65</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=1
+gets &gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;410.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>312</x>
+      <y>442</y>
+      <w>351</w>
+      <h>65</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=1
+gets &gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;250.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>715</x>
+      <y>221</y>
+      <w>130</w>
+      <h>156</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=n
+provides &gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>637</x>
+      <y>351</y>
+      <w>156</w>
+      <h>143</h>
+    </coordinates>
+    <panel_attributes>_Feedback_
+--
+comment: String</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
