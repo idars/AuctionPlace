@@ -26,6 +26,7 @@ and open the template in the editor.
                              label="Full Name"
                              styleClass="input"
                              p:placeholder="Enter Name"
+                             validatorMessage="Full name must be between 2 and 30 characters long"
                              value="#{customerBean.name}">
                     
                     <f:validateLength minimum="2" maximum="30"/>
@@ -36,9 +37,10 @@ and open the template in the editor.
                              label="Email"
                              styleClass="input"
                              p:placeholder="Enter email"
+                             validatorMessage="Email must be valid"
                              value="#{customerBean.email}">
                 
-                    <f:validateRegex pattern="/\S+@\S+\.\S+/"/>
+                    <f:validateRegex pattern="\S+@\S+"/>
                 </h:inputText>
                 
                 <h:outputLabel value="Password" styleClass="label"/>
@@ -46,15 +48,18 @@ and open the template in the editor.
                                label="Password"
                                styleClass="input"
                                p:placeholder="Enter password"
-                               required="true"
-                               requiredMessage="Password Required"
-                               value="#{customerBean.password}"/>
+                               validatorMessage="Password must be between 8 and 30 characters long"
+                               value="#{customerBean.password}">
+                    
+                    <f:validateLength minimum="8" maximum="30"/>
+                </h:inputSecret>
                 
                 <h:outputLabel value="Phone" styleClass="label"/>
                 <h:inputText id="phone" 
                              label="Phone"
                              styleClass="input"
                              p:placeholder="Enter Number"
+                             validatorMessage="Phone number must be 8 didgets"
                              value="#{customerBean.phone}">
                 
                     <f:validateLength minimum="8" maximum="8"/>
