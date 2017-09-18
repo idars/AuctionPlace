@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f = "http://java.sun.com/jsf/core"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+    
+    <h:head>
+        <title>Register Page</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <h:outputStylesheet name="default.css"/>
+    </h:head>
+    
+    <h:body>
+        <h1 class="title">Create an Account</h1>
+        <h:messages style="color:red"></h:messages>
+        <h:form styleClass="form">
+            <div class="container">
+                <h:outputLabel value="Full Name" styleClass="label"/>
+                <h:inputText id="name"
+                             label="Full Name"
+                             styleClass="input"
+                             p:placeholder="Enter Name"
+                             value="#{customerBean.name}">
+                    
+                    <f:validateLength minimum="2" maximum="30"/>
+                </h:inputText>
+                
+                <h:outputLabel value="Email" styleClass="label"/>
+                <h:inputText id="email" 
+                             label="Email"
+                             styleClass="input"
+                             p:placeholder="Enter email"
+                             value="#{customerBean.email}">
+                
+                    <f:validateRegex pattern="/\S+@\S+\.\S+/"/>
+                </h:inputText>
+                
+                <h:outputLabel value="Password" styleClass="label"/>
+                <h:inputSecret id="password" 
+                               label="Password"
+                               styleClass="input"
+                               p:placeholder="Enter password"
+                               required="true"
+                               requiredMessage="Password Required"
+                               value="#{customerBean.password}"/>
+                
+                <h:outputLabel value="Phone" styleClass="label"/>
+                <h:inputText id="phone" 
+                             label="Phone"
+                             styleClass="input"
+                             p:placeholder="Enter Number"
+                             value="#{customerBean.phone}">
+                
+                    <f:validateLength minimum="8" maximum="8"/>
+                </h:inputText>
+                
+                <h:commandButton id="submit"
+                                 class="button-green" 
+                                 value="Register"
+                                 action="#{customerBean.register}"/>
+            </div>
+        </h:form>
+    </h:body>
+    
+</html>

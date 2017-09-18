@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+    
+    <h:head>
+        <title>Login Page</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <h:outputStylesheet name="default.css"/>
+    </h:head>
+    
+    <h:body>
+        <h1 class="title">Login</h1>
+        <h:messages style="color:red"></h:messages>
+        <h:form styleClass="form">
+            <div class="container">
+                <h:outputLabel value="Email" styleClass="label"/>
+                <h:inputText id="email" 
+                             styleClass="input"
+                             p:placeholder="Enter email"
+                             required="true"
+                             requiredMessage="Email Required"
+                             value="#{customerBean.email}"/>
+                
+                <h:outputLabel value="Password" styleClass="label"/>
+                <h:inputSecret id="password" 
+                               styleClass="input"
+                               p:placeholder="Enter password"
+                               required="true"
+                               requiredMessage="Password Required"
+                               value="#{customerBean.password}"/>
+                
+                <h:commandButton id="submit"
+                                 class="button-green" 
+                                 value="Login"
+                                 action="#{customerBean.login}"/>
+            </div>
+            <div class="text-center">
+                Not registered?
+                <a href="register.xhtml">Create an Account</a>
+            </div>
+            <br/>
+        </h:form>
+        
+        <br/>
+        <div style="font-size: 30px; color: green">
+            <h:outputLabel value="Login Success! Hello #{customerBean.customer.name}" rendered="#{customerBean.logged}"/>
+        </div>
+        
+    </h:body>
+    
+</html>
