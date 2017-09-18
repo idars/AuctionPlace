@@ -8,7 +8,8 @@ and open the template in the editor.
 <html xmlns="http://www.w3.org/1999/xhtml" 
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f = "http://java.sun.com/jsf/core"
-      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     
     <h:head>
         <title>Register Page</title>
@@ -17,6 +18,7 @@ and open the template in the editor.
     </h:head>
     
     <h:body>
+        <ui:include src="navbar.xhtml"/>
         <h1 class="title">Create an Account</h1>
         <h:messages style="color:red"></h:messages>
         <h:form styleClass="form">
