@@ -38,6 +38,7 @@ public class CustomerBean implements Serializable {
     private String email;
     private String password;
     private String phone;
+    private Double rating;
     @Inject
     //CustomerController customerController;
 
@@ -56,7 +57,8 @@ public class CustomerBean implements Serializable {
                 this.getName(),
                 this.getEmail(),
                 this.getPassword(),
-                this.getPhone()
+                this.getPhone(),
+                this.getRating()
         ));
         return "login";
     }
@@ -80,7 +82,8 @@ public class CustomerBean implements Serializable {
                 "Test User",
                 "test@gmail.com",
                 "12345678",
-                "12345678"
+                "12345678",
+                0.0
         ));
     }
     
@@ -155,6 +158,14 @@ public class CustomerBean implements Serializable {
      */
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public Double getRating() {
+        return rating;
+    }
+
+    public void setRating(Double rating) {
+        this.rating = rating;
     }
     
 }

@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /**
  *
@@ -24,6 +25,8 @@ public class Feedback implements Serializable {
     private Long id;
     
     private String comment;
+    @ManyToOne
+    private Customer author;
 
     public String getComment() {
         return comment;
@@ -32,8 +35,14 @@ public class Feedback implements Serializable {
     public void setComment(String comment) {
         this.comment = comment;
     }
-    
-    
+
+    public Customer getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(Customer author) {
+        this.author = author;
+    }
 
     public Long getId() {
         return id;

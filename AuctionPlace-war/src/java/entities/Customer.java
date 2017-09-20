@@ -6,16 +6,18 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  * 
  */
 @Entity
-//@Table(name = "CUSTOMER")
+//@Table(name = "Customer")
 public class Customer implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -26,19 +28,31 @@ public class Customer implements Serializable {
     private String email;
     private String password;
     private String phone;
+    private Double rating;
     
+    @OneToMany
+    private List<Product> catalog; // how/where to initialize?
+    
+    public Customer() {
+        name = "";
+        email = "";
+        password = "";
+        phone = "";
+        rating = 0.0;
+    }
     
     public Customer(
             String name, 
             String email, 
             String password, 
-            String phone) {
+            String phone,
+            Double rating) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.phone = phone;
+        this.rating = rating;
     }
-    
 
     public Long getId() {
         return id;
@@ -127,6 +141,28 @@ public class Customer implements Serializable {
      */
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    /**
+     * @return the rating
+     */
+    public Double getRating() {
+        return rating;
+    }
+
+    /**
+     * @param rating the rating to be set
+     */
+    public void setRating(Double rating) {
+        this.rating = rating;
+    }
+
+    public List<Product> getCatalog() {
+        return catalog;
+    }
+
+    public void setCatalog(List<Product> catalog) {
+        this.catalog = catalog;
     }
     
 }

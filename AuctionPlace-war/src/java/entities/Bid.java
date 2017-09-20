@@ -23,31 +23,31 @@ public class Bid implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    private double amount;
-    private double maxAmount;
-    private boolean automaticBidding;
+    private Double amount;
+    private Double maxAmount;
+    private Boolean automaticBidding;
 
-    public double getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 
-    public double getMaxAmount() {
+    public Double getMaxAmount() {
         return maxAmount;
     }
 
-    public void setMaxAmount(double maxAmount) {
+    public void setMaxAmount(Double maxAmount) {
         this.maxAmount = maxAmount;
     }
 
-    public boolean isAutomaticBidding() {
+    public Boolean isAutomaticBidding() {
         return automaticBidding;
     }
 
-    public void setAutomaticBidding(boolean automaticBidding) {
+    public void setAutomaticBidding(Boolean automaticBidding) {
         this.automaticBidding = automaticBidding;
     }
 

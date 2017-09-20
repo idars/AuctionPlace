@@ -7,10 +7,12 @@ package entities;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.sql.Timestamp;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -24,17 +26,29 @@ public class Product implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    /* TODO
-    Create getters and setters for the enum value
-    */
+    public enum Status {
+        UNPUBLISHED, PUBLISHED, SOLD
+    }
+    
     private String name;
     private String picture;
     private String features;
-    private double rating;
-    private LocalDateTime  whenBiddingCloses;
-    // Do we want the enum declared as simple as this?
-    private enum status {unpublished, published, sold};
+    private Double rating;
+    private Timestamp whenBiddingCloses;
+    private Status status;
+    @OneToOne
+    private Feedback feedback;
 
+    // TODO constructors
+
+    public Feedback getFeedback() {
+        return feedback;
+    }
+
+    public void setFeedback(Feedback feedback) {
+        this.feedback = feedback;
+    }
+    
     public String getName() {
         return name;
     }
@@ -63,19 +77,17 @@ public class Product implements Serializable {
         return rating;
     }
 
-    public void setRating(double rating) {
+    public void setRating(Double rating) {
         this.rating = rating;
     }
 
-    public LocalDateTime getWhenBiddingCloses() {
+    public Timestamp getWhenBiddingCloses() {
         return whenBiddingCloses;
     }
 
-    public void setWhenBiddingCloses(LocalDateTime whenBiddingCloses) {
+    public void setWhenBiddingCloses(Timestamp whenBiddingCloses) {
         this.whenBiddingCloses = whenBiddingCloses;
     }
-    
- 
 
     public Long getId() {
         return id;
@@ -83,6 +95,14 @@ public class Product implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     @Override
