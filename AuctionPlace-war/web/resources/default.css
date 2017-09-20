@@ -14,6 +14,11 @@ and open the template in the editor.
 General css
 */
 
+.title {
+    font-size: 20px;
+    padding: 5px;
+}
+
 .container {
     padding: 16px;
 }
@@ -67,8 +72,23 @@ Navbar css
 }
 
 .li-navbar {
-    float: left;
     border-right:1px solid #bbb;
+    float: left;
+}
+
+.li-navbar-active {
+    background-color: #4CAF50;
+    border-right:1px solid #bbb;
+    float: left;
+}
+
+.li-navbar-login {
+    float: right;
+}
+
+.li-navbar-login-active {
+    background-color: #4CAF50;
+    float: right;
 }
 
 
@@ -81,10 +101,96 @@ li a {
     text-decoration: none;
 }
 
-li a:hover:not(.active) {
+.li-navbar:hover:not(.li-navbar-active) {
     background-color: #111;
 }
 
-.active {
-    background-color: #4CAF50;
+.li-navbar:hover:not(.li-navbar-login-active) {
+    background-color: #111;
 }
+
+
+
+
+/*
+-----------------------------------------------------------------------------
+Control Panel css
+*/
+
+.div-control-panel {
+    display: inline-block;
+    position: relative;
+    height: 150px;
+    width: 200px;
+    border-style: solid;
+    border-width: 3px;
+    border-radius: 20px;
+    border-color: lightgray;
+    padding: 10px;
+    margin: 30px;
+}
+
+.div-control-panel:hover {
+    background-color: lightgray;
+}
+
+.div-text-control-panel {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 20px;
+}
+
+.img-profile {
+    position: absolute;
+    top: 30%;
+    left: 22%;
+    height: 120px;
+    width: 120px;
+}
+
+
+
+
+/*
+-----------------------------------------------------------------------------
+Auction css
+*/
+
+
+.img-product {
+   border-radius: 50%;
+   height: 60px;
+   width: 60px;
+}
+/*
+.table-users {
+   border: 1px solid darken(#398B93, 5%);
+   border-radius: 10px;
+   box-shadow: 3px 3px 0 rgba(0,0,0,0.1);
+   max-width: calc(100% - 2em);
+   overflow: hidden;
+   width: 100%;
+}
+*/
+table {
+   width: 100%;
+}
+   
+   td {
+      text-align: center;
+      vertical-align: middle;
+      color: #398B93;
+      padding: 10px;
+   }
+   
+   th { 
+      background-color: #398B93;
+      font-weight: 300;
+      color: #398B93;
+      padding: 10px;
+   }
+
+   tr:nth-child(even){ background-color: white; }
+   tr:nth-child(odd){ background-color: lighten(#398B93, 55%) }
+
+   

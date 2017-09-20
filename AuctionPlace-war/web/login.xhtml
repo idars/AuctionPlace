@@ -17,9 +17,10 @@ and open the template in the editor.
     </h:head>
     
     <h:body>
-        <ui:include src="navbar.xhtml"/>
+        <ui:include src="navbar.xhtml"><ui:param name="active" value="login" /></ui:include>
         <h1 class="title">Login</h1>
         <h:messages style="color:red"></h:messages>
+        
         <h:form styleClass="form">
             <div class="container">
                 <h:outputLabel value="Email" styleClass="label"/>
@@ -51,6 +52,13 @@ and open the template in the editor.
         </h:form>
         
         <br/>
+        <h:form>
+        <h:commandButton id="test" 
+                         value="Use Test Profile"
+                         action="#{customerBean.testLogin}"/>
+        </h:form>
+        
+        <br/><br/>
         <div style="font-size: 30px; color: green">
             <h:outputLabel value="Login Success! Hello #{customerBean.customer.name}" rendered="#{customerBean.logged}"/>
         </div>
