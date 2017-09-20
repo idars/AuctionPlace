@@ -5,12 +5,40 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    
+    <h:head>
+        <title>Auction Page</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+        <h:outputStylesheet name="default.css"/>
+    </h:head>
+    
+    <h:body>
+        <ui:include src="navbar.xhtml"><ui:param name="active" value="auction" /></ui:include>
+        <h1 class="title">Products</h1>
+        
+        <table cellspacing="0">
+       <tr>
+          <th>Picture</th>
+          <th>Name</th>
+          <th>Current bid</th>
+          <th>Time left (hh:mm)</th>
+          <th width="230"></th>
+       </tr>
+            
+        <c:forEach items="${auctionBean.products}" var="product">
+            <tr>
+          <td><img class="img-product" src="http://www.pngmart.com/files/1/Book-PNG-HD.png"/></td>
+          <td><a href="index.html">Bibel</a></td>
+          <td>49.99$</td>
+          <td>15:22</td>
+          <td><button>Place a bid</button></td>
+       </tr>
+    
+        </c:forEach>
+        </table>
+    </h:body>
 </html>

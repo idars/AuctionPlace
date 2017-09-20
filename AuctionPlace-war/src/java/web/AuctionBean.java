@@ -5,11 +5,16 @@
  */
 package web;
 
-import entities.Customer;
+//import javax.enterprise.context.Dependent;
+
+import DB.MockupDB;
+
+import entities.Product;
 import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
+//import javax.enterprise.context.Dependent;
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Produces;
 import javax.faces.context.FacesContext;
@@ -23,25 +28,21 @@ import javax.servlet.http.HttpSession;
  *
  * @author Daniel Losvik
  */
-@Named(value = "userController")
+@Named(value = "auctionBean")
 //@Dependent
 @SessionScoped
-public class UserController implements Serializable {
+public class AuctionBean implements Serializable {
     
-    Customer customer;
-    //@EJB
-    //private com.forest.ejb.UserBean ejbFacade;
-    private String name;
-    private String email;
-    private String password;
-    private String phone;
-    @Inject
-    //CustomerController customerController;
+    String[] products = {"1","2","3"};
 
     /**
-     * Creates a new instance of UserController
+     * Creates a new instance of AuctionBean
      */
-    public UserController() {
+    public AuctionBean() {
+    }
+    
+    public String[] getProducts() {
+        return products;
     }
     
 }

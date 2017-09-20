@@ -5,13 +5,25 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ul class="ul-navbar">
-        <li class="li-navbar"><a href="login.xhtml">Auction home</a></li>
-        <li class="li-navbar"><a href="login.xhtml">Control panel</a></li>
-        <li class="li-navbar" style="float:right"><a class="active" href="login.xhtml">Login</a></li>
+        <c:if test = "${active == 'auction'}">
+            <li class="li-navbar-active"><a href="auction.xhtml">Auction home</a></li>
+            <li class="li-navbar"><a href="control_panel.xhtml">Control panel</a></li>
+            <li class="li-navbar-login"><a href="login.xhtml">Login</a></li>
+        </c:if>
+        <c:if test = "${active == 'control_panel'}">
+            <li class="li-navbar"><a href="auction.xhtml">Auction home</a></li>
+            <li class="li-navbar-active"><a href="control_panel.xhtml">Control panel</a></li>
+            <li class="li-navbar-login"><a href="login.xhtml">Login</a></li>
+        </c:if>
+        <c:if test = "${active == 'login'}">
+            <li class="li-navbar"><a href="auction.xhtml">Auction home</a></li>
+            <li class="li-navbar"><a href="control_panel.xhtml">Control panel</a></li>
+            <li class="li-navbar-login-active"><a href="login.xhtml">Login</a></li>
+        </c:if>
     </ul>
 
 </ui:composition>

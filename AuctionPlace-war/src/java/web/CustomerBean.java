@@ -75,6 +75,15 @@ public class CustomerBean implements Serializable {
         return (getCustomer() != null);
     }
     
+    public void testLogin() {
+        setCustomer(new Customer(
+                "Test User",
+                "test@gmail.com",
+                "12345678",
+                "12345678"
+        ));
+    }
+    
     
     
 
