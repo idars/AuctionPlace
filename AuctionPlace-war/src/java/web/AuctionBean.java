@@ -33,7 +33,12 @@ import javax.servlet.http.HttpSession;
 @SessionScoped
 public class AuctionBean implements Serializable {
     
-    String[] products = {"1","2","3"};
+    private Product[] products = {
+        new Product("Bibel", "null", "null", 0.0, null, null, null),
+        new Product("Bibel 2", "null", "null", 0.0, null, null, null),
+        new Product("Bibel 3", "null", "null", 0.0, null, null, null),
+        new Product("Bibel 4", "null", "null", 0.0, null, null, null),
+    };
 
     /**
      * Creates a new instance of AuctionBean
@@ -41,7 +46,7 @@ public class AuctionBean implements Serializable {
     public AuctionBean() {
     }
     
-    public String[] getProducts() {
+    public Product[] getProducts() {
         return products;
     }
     

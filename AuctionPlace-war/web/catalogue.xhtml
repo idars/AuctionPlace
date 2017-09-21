@@ -7,7 +7,9 @@ and open the template in the editor.
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f = "http://java.sun.com/jsf/core">
     
     <h:head>
         <title>User Catalogue Page</title>
@@ -17,11 +19,47 @@ and open the template in the editor.
     
     <h:body>
         <ui:include src="navbar.xhtml"><ui:param name="active" value="control_panel" /></ui:include>
-        <h1 class="title">My Catalogue</h1>
         
-        <h:commandButton id="submit"
-                         class="button-green" 
-                         value="Add new Product"
-                         action="add_product.xhtml"/>
+        <div class="table-products">
+        <h1 class="title">Products</h1>
+        
+        <table cellspacing="0">
+       <tr>
+          <th>Picture</th>
+          <th>Name</th>
+          <th>Current bid</th>
+          <th>Time left (hh:mm)</th>
+          <th width="230"></th>
+       </tr>
+            
+            <c:forEach items="${customerBean.customer.catalog}" var="product">
+            <tr>
+                <td><img class="img-product" src="http://www.pngmart.com/files/1/Book-PNG-HD.png"/></td>
+                <h:form><td>
+                        <h:commandLink action="product_details">${product.name}
+                            <f:actionListener binding="#{productBean.setProduct(product)}" />
+                        </h:commandLink></td></h:form>
+                <td>0$</td>
+                <td>15:22</td>
+                <h:form><td>
+                        <h:commandButton id="submit" 
+                                         value="Place a bid"
+                                         action="#{customerBean.navigateIfLogged('place_bid')}">
+                            <f:actionListener binding="#{productBean.setProduct(product)}" />
+                        </h:commandButton>
+                    </td></h:form>
+            </tr>
+        </c:forEach>
+            
+        </table>
+        </div>
+        
+        <br/>
+        <h:form>
+            <h:commandButton id="submit"
+                             class="button-green" 
+                             value="Add new Product"
+                             action="add_product.xhtml"/>
+        </h:form>
     </h:body>
 </html>

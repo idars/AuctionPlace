@@ -34,9 +34,16 @@ import javax.servlet.http.HttpSession;
 @SessionScoped
 public class ProductBean implements Serializable{
     
-    private Product product;
+    private Product[] products = {
+        new Product("Bibel", "null", "null", 0.0, null, null, null),
+        new Product("Bibel 2", "null", "null", 0.0, null, null, null),
+        new Product("Bibel 3", "null", "null", 0.0, null, null, null),
+        new Product("Bibel 4", "null", "null", 0.0, null, null, null),
+    };
+    
     //@EJB
     //private com.forest.ejb.UserBean ejbFacade;
+    private Product product;
     private String name;
     
     @Inject
@@ -48,5 +55,19 @@ public class ProductBean implements Serializable{
      */
     public ProductBean() {
     }
+    
+    public Product[] getProducts() {
+        return products;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+    
+    
     
 }

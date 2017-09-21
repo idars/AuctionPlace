@@ -15,8 +15,13 @@ General css
 */
 
 .title {
-    font-size: 20px;
+    font-size: 25px;
     padding: 5px;
+}
+
+.label {
+    font-size: 17px;
+    font-weight: 700;
 }
 
 .container {
@@ -162,35 +167,33 @@ Auction css
    height: 60px;
    width: 60px;
 }
-/*
-.table-users {
-   border: 1px solid darken(#398B93, 5%);
+
+.table-products {
    border-radius: 10px;
    box-shadow: 3px 3px 0 rgba(0,0,0,0.1);
    max-width: calc(100% - 2em);
    overflow: hidden;
    width: 100%;
 }
-*/
+
 table {
    width: 100%;
 }
-   
-   td {
-      text-align: center;
-      vertical-align: middle;
-      color: #398B93;
-      padding: 10px;
-   }
-   
-   th { 
-      background-color: #398B93;
-      font-weight: 300;
-      color: #398B93;
-      padding: 10px;
-   }
 
-   tr:nth-child(even){ background-color: white; }
-   tr:nth-child(odd){ background-color: lighten(#398B93, 55%) }
+th { 
+    background-color: whitesmoke;
+    font-weight: 700;
+    padding: 10px;
+}
+   
+td {
+    text-align: center;
+    vertical-align: middle;
+    padding: 10px;
+}
+
+tr:nth-child(odd){ 
+    background-color: whitesmoke; 
+}
 
    

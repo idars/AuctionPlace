@@ -9,6 +9,8 @@ and open the template in the editor.
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ul class="ul-navbar">
+        <c:if test = "${customerBean.logged}">
+            
         <c:if test = "${active == 'auction'}">
             <li class="li-navbar-active"><a href="auction.xhtml">Auction home</a></li>
             <li class="li-navbar"><a href="control_panel.xhtml">Control panel</a></li>
@@ -23,6 +25,21 @@ and open the template in the editor.
             <li class="li-navbar"><a href="auction.xhtml">Auction home</a></li>
             <li class="li-navbar"><a href="control_panel.xhtml">Control panel</a></li>
             <li class="li-navbar-login-active"><a href="login.xhtml">Login</a></li>
+        </c:if>
+        </c:if>
+        
+        <c:if test = "${!customerBean.logged}">
+            
+        <c:if test = "${active == 'auction'}">
+            <li class="li-navbar-active"><a href="auction.xhtml">Auction home</a></li>
+            <li class="li-navbar"><a href="login.xhtml">Control panel</a></li>
+            <li class="li-navbar-login"><a href="login.xhtml">Login</a></li>
+        </c:if>
+        <c:if test = "${active == 'login'}">
+            <li class="li-navbar"><a href="auction.xhtml">Auction home</a></li>
+            <li class="li-navbar"><a href="login.xhtml">Control panel</a></li>
+            <li class="li-navbar-login-active"><a href="login.xhtml">Login</a></li>
+        </c:if>
         </c:if>
     </ul>
 

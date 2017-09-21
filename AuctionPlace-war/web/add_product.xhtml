@@ -35,26 +35,15 @@ and open the template in the editor.
                     <f:validateLength minimum="2" maximum="30"/>
                 </h:inputText>
                 
-                <h:outputLabel value="Email" styleClass="label"/>
-                <h:inputText id="email" 
-                             label="Email"
+                <h:outputLabel value="Features" styleClass="label"/>
+                <h:inputText id="features" 
+                             label="Features"
                              styleClass="input"
                              p:placeholder="#{customerBean.customer.email}"
-                             validatorMessage="Email must be valid"
+                             validatorMessage="Features must be atleast 2 characters"
                              value="#{customerBean.email}">
                 
-                    <f:validateRegex pattern="\S+@\S+"/>
-                </h:inputText>
-                
-                <h:outputLabel value="Phone" styleClass="label"/>
-                <h:inputText id="phone" 
-                             label="Phone"
-                             styleClass="input"
-                             p:placeholder="#{customerBean.customer.phone}"
-                             validatorMessage="Phone number must be 8 didgets"
-                             value="#{customerBean.phone}">
-                
-                    <f:validateLength minimum="8" maximum="8"/>
+                    <f:validateLength minimum="2" maximum="100"/>
                 </h:inputText>
                 
                 <h:commandButton id="submit"

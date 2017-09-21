@@ -41,6 +41,17 @@ public class Product implements Serializable {
 
     // TODO constructors
 
+    public Product(String name, String picture, String features, Double rating, Timestamp whenBiddingCloses, Status status, Feedback feedback) {
+        this.name = name;
+        this.picture = picture;
+        this.features = features;
+        this.rating = rating;
+        this.whenBiddingCloses = whenBiddingCloses;
+        this.status = status;
+        this.feedback = feedback;
+    }
+    
+
     public Feedback getFeedback() {
         return feedback;
     }

@@ -87,6 +87,14 @@ public class CustomerBean implements Serializable {
         ));
     }
     
+    public String navigateIfLogged(String page) {
+        if(this.isLogged()) {
+            return page;
+        }
+        else {
+            return "login";
+        }
+    }
     
     
 
