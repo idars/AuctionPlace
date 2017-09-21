@@ -6,18 +6,21 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * 
  */
 @Entity
-//@Table(name = "Customer")
+//@Table(name = "CUSTOMER")
 public class Customer implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -30,8 +33,14 @@ public class Customer implements Serializable {
     private String phone;
     private Double rating;
     
-    @OneToMany
-    private List<Product> catalog; // how/where to initialize?
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner") // maps to the "owner" member field of Product
+    private List<Product> catalog;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "bidder")
+    private List<Bid> bids;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "author")
+    private List<Feedback> feedbacks;
     
     public Customer() {
         name = "";
@@ -39,6 +48,9 @@ public class Customer implements Serializable {
         password = "";
         phone = "";
         rating = 0.0;
+        catalog = new ArrayList<>();
+        bids = new ArrayList<>();
+        feedbacks = new ArrayList<>();
     }
     
     public Customer(
@@ -52,6 +64,9 @@ public class Customer implements Serializable {
         this.password = password;
         this.phone = phone;
         this.rating = rating;
+        this.catalog = new ArrayList<>();
+        this.bids = new ArrayList<>();
+        this.feedbacks = new ArrayList<>();
     }
 
     public Long getId() {
@@ -60,31 +75,6 @@ public class Customer implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Customer)) {
-            return false;
-        }
-        Customer other = (Customer) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "entities.Customer[ id=" + id + " ]";
     }
 
     /**
@@ -118,6 +108,7 @@ public class Customer implements Serializable {
     /**
      * @return the password
      */
+    @XmlTransient
     public String getPassword() {
         return password;
     }
@@ -163,6 +154,47 @@ public class Customer implements Serializable {
 
     public void setCatalog(List<Product> catalog) {
         this.catalog = catalog;
+    }
+
+    public List<Bid> getBids() {
+        return bids;
+    }
+
+    public void setBids(List<Bid> bids) {
+        this.bids = bids;
+    }
+
+    public List<Feedback> getFeedbacks() {
+        return feedbacks;
+    }
+
+    public void setFeedbacks(List<Feedback> feedbacks) {
+        this.feedbacks = feedbacks;
+    }
+    
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Customer)) {
+            return false;
+        }
+        Customer other = (Customer) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "entities.Customer[ id=" + id + " ]";
     }
     
 }

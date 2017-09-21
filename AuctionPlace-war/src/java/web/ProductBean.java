@@ -35,10 +35,10 @@ import javax.servlet.http.HttpSession;
 public class ProductBean implements Serializable{
     
     private Product[] products = {
-        new Product("Bibel", "null", "null", 0.0, null, null, null),
-        new Product("Bibel 2", "null", "null", 0.0, null, null, null),
-        new Product("Bibel 3", "null", "null", 0.0, null, null, null),
-        new Product("Bibel 4", "null", "null", 0.0, null, null, null),
+        new Product("Bibel", "null", "null", 0.0, null, null),
+        new Product("Bibel 2", "null", "null", 0.0, null, null),
+        new Product("Bibel 3", "null", "null", 0.0, null, null),
+        new Product("Bibel 4", "null", "null", 0.0, null, null),
     };
     
     //@EJB

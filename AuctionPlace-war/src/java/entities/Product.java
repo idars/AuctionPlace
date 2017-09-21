@@ -9,9 +9,12 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.sql.Timestamp;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 /**
@@ -36,28 +39,36 @@ public class Product implements Serializable {
     private Double rating;
     private Timestamp whenBiddingCloses;
     private Status status;
-    @OneToOne
+    
+    @JoinColumn(name = "FEEDBACK_ID", referencedColumnName = "ID")
+    @OneToOne(optional = false)
     private Feedback feedback;
+    
+    @JoinColumn(name = "BID_ID", referencedColumnName = "ID")
+    @OneToOne(optional = false)
+    private Bid currentBid;
+    
+    @JoinColumn(name = "OWNER_ID", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private Customer owner;
 
     // TODO constructors
 
-    public Product(String name, String picture, String features, Double rating, Timestamp whenBiddingCloses, Status status, Feedback feedback) {
+    public Product(String name, String picture, String features, Double rating, Timestamp whenBiddingCloses, Status status) {
         this.name = name;
         this.picture = picture;
         this.features = features;
         this.rating = rating;
         this.whenBiddingCloses = whenBiddingCloses;
         this.status = status;
-        this.feedback = feedback;
-    }
-    
-
-    public Feedback getFeedback() {
-        return feedback;
     }
 
-    public void setFeedback(Feedback feedback) {
-        this.feedback = feedback;
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
     
     public String getName() {
@@ -100,20 +111,36 @@ public class Product implements Serializable {
         this.whenBiddingCloses = whenBiddingCloses;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public Status getStatus() {
         return status;
     }
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public Customer getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Customer owner) {
+        this.owner = owner;
+    }
+
+    public Bid getCurrentBid() {
+        return currentBid;
+    }
+
+    public void setCurrentBid(Bid currentBid) {
+        this.currentBid = currentBid;
+    }
+
+    public Feedback getFeedback() {
+        return feedback;
+    }
+
+    public void setFeedback(Feedback feedback) {
+        this.feedback = feedback;
     }
 
     @Override

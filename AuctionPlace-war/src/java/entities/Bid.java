@@ -10,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 /**
  *
@@ -26,6 +28,18 @@ public class Bid implements Serializable {
     private Double amount;
     private Double maxAmount;
     private Boolean automaticBidding;
+    
+    @JoinColumn(name = "BIDDER_ID", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private Customer bidder;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Double getAmount() {
         return amount;
@@ -51,12 +65,12 @@ public class Bid implements Serializable {
         this.automaticBidding = automaticBidding;
     }
 
-    public Long getId() {
-        return id;
+    public Customer getBidder() {
+        return bidder;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setBidder(Customer bidder) {
+        this.bidder = bidder;
     }
 
     @Override
