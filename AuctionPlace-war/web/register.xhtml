@@ -9,7 +9,8 @@ and open the template in the editor.
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f = "http://java.sun.com/jsf/core"
       xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     
     <h:head>
         <title>Register Page</title>
@@ -21,6 +22,10 @@ and open the template in the editor.
         <ui:include src="navbar.xhtml"><ui:param name="active" value="login" /></ui:include>
         <h1 class="title">Create an Account</h1>
         <h:messages style="color:red"></h:messages>
+        <c:if test = "${customerController.errorMessage != null}">
+            <h:outputLabel value="#{customerController.errorMessage}" styleClass="errorMessage"/>
+            <br/><br/>
+        </c:if>
         
         <h:form styleClass="form">
             <div class="container">
@@ -30,7 +35,7 @@ and open the template in the editor.
                              styleClass="input"
                              p:placeholder="Enter Name"
                              validatorMessage="Full name must be atleast 2 characters"
-                             value="#{customerBean.name}">
+                             value="#{customerController.name}">
                     
                     <f:validateLength minimum="2" maximum="30"/>
                 </h:inputText>
@@ -41,7 +46,7 @@ and open the template in the editor.
                              styleClass="input"
                              p:placeholder="Enter email"
                              validatorMessage="Email must be valid"
-                             value="#{customerBean.email}">
+                             value="#{customerController.email}">
                 
                     <f:validateRegex pattern="\S+@\S+"/>
                 </h:inputText>
@@ -52,7 +57,7 @@ and open the template in the editor.
                                styleClass="input"
                                p:placeholder="Enter password"
                                validatorMessage="Password must be atleast 8 characters"
-                               value="#{customerBean.password}">
+                               value="#{customerController.password}">
                     
                     <f:validateLength minimum="8" maximum="30"/>
                 </h:inputSecret>
@@ -63,7 +68,7 @@ and open the template in the editor.
                              styleClass="input"
                              p:placeholder="Enter Number"
                              validatorMessage="Phone number must be 8 didgets"
-                             value="#{customerBean.phone}">
+                             value="#{customerController.phone}">
                 
                     <f:validateLength minimum="8" maximum="8"/>
                 </h:inputText>
@@ -71,7 +76,7 @@ and open the template in the editor.
                 <h:commandButton id="submit"
                                  class="button-green" 
                                  value="Register"
-                                 action="#{customerBean.register}"/>
+                                 action="#{customerController.register}"/>
             </div>
         </h:form>
     </h:body>

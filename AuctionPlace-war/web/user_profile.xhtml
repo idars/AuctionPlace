@@ -27,9 +27,9 @@ and open the template in the editor.
                 <h:inputText id="name"
                              label="Full Name"
                              styleClass="input"
-                             p:placeholder="#{customerBean.customer.name}"
+                             p:placeholder="#{customerController.customer.name}"
                              validatorMessage="Full name must be atleast 2 characters"
-                             value="#{customerBean.name}">
+                             value="#{customerController.name}">
                     
                     <f:validateLength minimum="2" maximum="30"/>
                 </h:inputText>
@@ -40,7 +40,7 @@ and open the template in the editor.
                              styleClass="input"
                              p:placeholder="#{customerBean.customer.email}"
                              validatorMessage="Email must be valid"
-                             value="#{customerBean.email}">
+                             value="#{customerController.email}">
                 
                     <f:validateRegex pattern="\S+@\S+"/>
                 </h:inputText>
@@ -51,7 +51,7 @@ and open the template in the editor.
                              styleClass="input"
                              p:placeholder="#{customerBean.customer.phone}"
                              validatorMessage="Phone number must be 8 didgets"
-                             value="#{customerBean.phone}">
+                             value="#{customerController.phone}">
                 
                     <f:validateLength minimum="8" maximum="8"/>
                 </h:inputText>

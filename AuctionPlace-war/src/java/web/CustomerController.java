@@ -5,14 +5,11 @@
  */
 package web;
 
-import DB.MockupDB;
-
 import entities.Customer;
 import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
-//import javax.enterprise.context.Dependent;
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Produces;
 import javax.faces.context.FacesContext;
@@ -26,26 +23,25 @@ import javax.servlet.http.HttpSession;
  *
  * @author Daniel Losvik
  */
-@Named(value = "customerBean")
-//@Dependent
+@Named(value = "customerController")
 @SessionScoped
-public class CustomerBean implements Serializable {
+public class CustomerController implements Serializable {
     
     private Customer customer;
-    //@EJB
-    //private com.forest.ejb.UserBean ejbFacade;
+    @EJB
+    private ejb.CustomerBean ejbFacade;
     private String name;
     private String email;
     private String password;
     private String phone;
     private Double rating;
-    @Inject
-    //CustomerController customerController;
+    
+    private String errorMessage;
 
     /**
      * Creates a new instance of CustomerBean
      */
-    public CustomerBean() {
+    public CustomerController() {
     }
     
     /**
@@ -53,31 +49,48 @@ public class CustomerBean implements Serializable {
      * -> must check if email already exist
      */
     public String register() {
-        MockupDB.addNewCustomer(new Customer(
+        boolean success = ejbFacade.RegisterNewCustomer(new Customer(
                 this.getName(),
                 this.getEmail(),
                 this.getPassword(),
                 this.getPhone(),
                 this.getRating()
         ));
-        return "login";
+        if(!success) {
+            setErrorMessage("Email " + this.getEmail() + " Already Exists");
+            return "register";
+        }
+        else {
+            setErrorMessage(null);
+            return "login";
+        }
     }
     
     /**
      * Login the customer if the given credentials are valid
      */
-    public void login() {
-        Customer customer = MockupDB.getCustomer(this.getEmail(), this.getPassword());
+    public String login() {
+        Customer customer = ejbFacade.loginCustomer(this.getEmail(), this.getPassword());
         if(customer != null) {
+            setErrorMessage(null);
             setCustomer(customer);
+            return "auction";
         }
+        else {
+            setErrorMessage("Wrong email or password");
+            return "login";
+        }
+    }
+    
+    public void logout() {
+        setCustomer(null);
     }
     
     public boolean isLogged() {
         return (getCustomer() != null);
     }
     
-    public void testLogin() {
+    public String testLogin() {
         setCustomer(new Customer(
                 "Test User",
                 "test@gmail.com",
@@ -85,13 +98,16 @@ public class CustomerBean implements Serializable {
                 "12345678",
                 0.0
         ));
+        return "auction";
     }
     
     public String navigateIfLogged(String page) {
         if(this.isLogged()) {
+            setErrorMessage(null);
             return page;
         }
         else {
+            setErrorMessage("Please login to continue");
             return "login";
         }
     }
@@ -175,5 +191,15 @@ public class CustomerBean implements Serializable {
     public void setRating(Double rating) {
         this.rating = rating;
     }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
+    
+    
     
 }

@@ -33,6 +33,26 @@ public class Bid implements Serializable {
     @ManyToOne(optional = false)
     private Customer bidder;
 
+    public Bid() {
+        this.id = null;
+        this.amount = null;
+        this.maxAmount = null;
+        this.automaticBidding = null;
+        this.bidder = null;
+    }
+
+    public Bid(Long id, Double amount, Double maxAmount, Boolean automaticBidding, Customer bidder) {
+        this.id = id;
+        this.amount = amount;
+        this.maxAmount = maxAmount;
+        this.automaticBidding = automaticBidding;
+        this.bidder = bidder;
+    }
+    
+    
+    
+    
+
     public Long getId() {
         return id;
     }

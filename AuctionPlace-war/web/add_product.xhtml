@@ -28,9 +28,9 @@ and open the template in the editor.
                 <h:inputText id="name"
                              label="Product Name"
                              styleClass="input"
-                             p:placeholder="Enter Name"
+                             p:placeholder="Enter Product Name"
                              validatorMessage="Product name must be atleast 2 characters"
-                             value="#{customerBean.name}">
+                             value="#{productController.name}">
                     
                     <f:validateLength minimum="2" maximum="30"/>
                 </h:inputText>
@@ -39,9 +39,9 @@ and open the template in the editor.
                 <h:inputText id="features" 
                              label="Features"
                              styleClass="input"
-                             p:placeholder="#{customerBean.customer.email}"
+                             p:placeholder="Enter Product Features"
                              validatorMessage="Features must be atleast 2 characters"
-                             value="#{customerBean.email}">
+                             value="#{productController.features}">
                 
                     <f:validateLength minimum="2" maximum="100"/>
                 </h:inputText>

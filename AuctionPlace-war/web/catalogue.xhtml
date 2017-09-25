@@ -32,20 +32,20 @@ and open the template in the editor.
           <th width="230"></th>
        </tr>
             
-            <c:forEach items="${customerBean.customer.catalog}" var="product">
+            <c:forEach items="${customerController.customer.catalog}" var="product">
             <tr>
                 <td><img class="img-product" src="http://www.pngmart.com/files/1/Book-PNG-HD.png"/></td>
                 <h:form><td>
                         <h:commandLink action="product_details">${product.name}
-                            <f:actionListener binding="#{productBean.setProduct(product)}" />
+                            <f:actionListener binding="#{customerController.setProduct(product)}" />
                         </h:commandLink></td></h:form>
                 <td>0$</td>
                 <td>15:22</td>
                 <h:form><td>
                         <h:commandButton id="submit" 
                                          value="Place a bid"
-                                         action="#{customerBean.navigateIfLogged('place_bid')}">
-                            <f:actionListener binding="#{productBean.setProduct(product)}" />
+                                         action="#{customerController.navigateIfLogged('place_bid')}">
+                            <f:actionListener binding="#{productController.setProduct(product)}" />
                         </h:commandButton>
                     </td></h:form>
             </tr>

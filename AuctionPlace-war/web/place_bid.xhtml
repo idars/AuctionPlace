@@ -22,7 +22,7 @@ and open the template in the editor.
         <h:form styleClass="form">
             <div class="container">
                 <h:outputLabel value="Name" styleClass="label"/><br/>
-                <h:outputText value="#{productBean.product.name}"/><br/><br/>
+                <h:outputText value="#{productController.product.name}"/><br/><br/>
                 
                 <h:outputLabel value="Amount" styleClass="label"/>
                 <h:inputText id="amount" 
@@ -30,7 +30,7 @@ and open the template in the editor.
                                p:placeholder="0$"
                                required="true"
                                requiredMessage="Password Required"
-                               value="#{customerBean.password}"/>
+                               value="#{customerController.password}"/>
                 
                 <h:commandButton id="submit"
                                  class="button-green" 

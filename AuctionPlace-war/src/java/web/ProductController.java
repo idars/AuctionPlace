@@ -5,17 +5,11 @@
  */
 package web;
 
-
-//import javax.enterprise.context.Dependent;
-
-import DB.MockupDB;
-
 import entities.Product;
 import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
-//import javax.enterprise.context.Dependent;
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Produces;
 import javax.faces.context.FacesContext;
@@ -29,10 +23,9 @@ import javax.servlet.http.HttpSession;
  *
  * @author Daniel Losvik
  */
-@Named(value = "productBean")
-//@Dependent
+@Named(value = "productController")
 @SessionScoped
-public class ProductBean implements Serializable{
+public class ProductController implements Serializable{
     
     private Product[] products = {
         new Product("Bibel", "null", "null", 0.0, null, null),
@@ -45,6 +38,7 @@ public class ProductBean implements Serializable{
     //private com.forest.ejb.UserBean ejbFacade;
     private Product product;
     private String name;
+    private String features;
     
     @Inject
     //CustomerController customerController;
@@ -53,7 +47,7 @@ public class ProductBean implements Serializable{
     /**
      * Creates a new instance of ProductBean
      */
-    public ProductBean() {
+    public ProductController() {
     }
     
     public Product[] getProducts() {
@@ -66,6 +60,22 @@ public class ProductBean implements Serializable{
 
     public void setProduct(Product product) {
         this.product = product;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getFeatures() {
+        return features;
+    }
+
+    public void setFeatures(String features) {
+        this.features = features;
     }
     
     

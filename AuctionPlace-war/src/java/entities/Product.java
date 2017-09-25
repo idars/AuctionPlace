@@ -24,7 +24,7 @@ import javax.persistence.OneToOne;
 @Entity
 public class Product implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 4L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -52,7 +52,14 @@ public class Product implements Serializable {
     @ManyToOne(optional = false)
     private Customer owner;
 
-    // TODO constructors
+    public Product() {
+        this.name = "";
+        this.picture = "";
+        this.features = "";
+        this.rating = 0.0;
+        this.whenBiddingCloses = null;
+        this.status = null;
+    }
 
     public Product(String name, String picture, String features, Double rating, Timestamp whenBiddingCloses, Status status) {
         this.name = name;

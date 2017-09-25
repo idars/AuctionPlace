@@ -8,7 +8,8 @@ and open the template in the editor.
 <html xmlns="http://www.w3.org/1999/xhtml" 
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     
     <h:head>
         <title>Login Page</title>
@@ -20,6 +21,10 @@ and open the template in the editor.
         <ui:include src="navbar.xhtml"><ui:param name="active" value="login" /></ui:include>
         <h1 class="title">Login</h1>
         <h:messages style="color:red"></h:messages>
+        <c:if test = "${customerController.errorMessage != null}">
+            <h:outputLabel value="#{customerController.errorMessage}" styleClass="errorMessage"/>
+            <br/><br/>
+        </c:if>
         
         <h:form styleClass="form">
             <div class="container">
@@ -29,7 +34,7 @@ and open the template in the editor.
                              p:placeholder="Enter email"
                              required="true"
                              requiredMessage="Email Required"
-                             value="#{customerBean.email}"/>
+                             value="#{customerController.email}"/>
                 
                 <h:outputLabel value="Password" styleClass="label"/>
                 <h:inputSecret id="password" 
@@ -37,12 +42,12 @@ and open the template in the editor.
                                p:placeholder="Enter password"
                                required="true"
                                requiredMessage="Password Required"
-                               value="#{customerBean.password}"/>
+                               value="#{customerController.password}"/>
                 
                 <h:commandButton id="submit"
                                  class="button-green" 
                                  value="Login"
-                                 action="#{customerBean.login}"/>
+                                 action="#{customerController.login}"/>
             </div>
             <div class="text-center">
                 Not registered?
@@ -55,14 +60,8 @@ and open the template in the editor.
         <h:form>
         <h:commandButton id="test" 
                          value="Use Test Profile"
-                         action="#{customerBean.testLogin}"/>
+                         action="#{customerController.testLogin}"/>
         </h:form>
-        
-        <br/><br/>
-        <div style="font-size: 30px; color: green">
-            <h:outputLabel value="Login Success! Hello #{customerBean.customer.name}" rendered="#{customerBean.logged}"/>
-        </div>
-        
     </h:body>
     
 </html>

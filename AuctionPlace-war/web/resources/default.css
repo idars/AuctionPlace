@@ -60,6 +60,10 @@ General css
     text-align: center;
 }
 
+.errorMessage {
+    color: red;
+}
+
 
 
 
@@ -67,6 +71,15 @@ General css
 -----------------------------------------------------------------------------
 Navbar css
 */
+
+.fullname-navbar {
+    display: inline-block;
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+    margin-top: 12px;
+    margin-left: 20px;
+}
 
 .ul-navbar {
     list-style-type: none;
@@ -99,6 +112,14 @@ Navbar css
 
 
 li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.commandLink {
     display: block;
     color: white;
     text-align: center;

@@ -22,7 +22,7 @@ import javax.persistence.OneToOne;
 @Entity
 public class Feedback implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 3L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -32,6 +32,19 @@ public class Feedback implements Serializable {
     @JoinColumn(name = "AUTHOR_ID", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private Customer author;
+
+    public Feedback() {
+        this.id = null;
+        this.comment = null;
+        this.author = null;
+    }
+    
+    public Feedback(Long id, String comment, Customer author) {
+        this.id = id;
+        this.comment = comment;
+        this.author = author;
+    }
+    
     
     public Long getId() {
         return id;

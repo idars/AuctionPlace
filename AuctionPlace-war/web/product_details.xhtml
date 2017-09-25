@@ -21,12 +21,12 @@ and open the template in the editor.
         <h:form styleClass="form">
             <div class="container">
                 <h:outputLabel value="Name" styleClass="label"/><br/>
-                <h:outputText value="#{productBean.product.name}"/>
+                <h:outputText value="#{productController.product.name}"/>
                 
                 <h:commandButton id="submit"
                                  class="button-green" 
                                  value="Place a Bid"
-                                 action="#{customerBean.navigateIfLogged('place_bid')}"/>
+                                 action="#{customerController.navigateIfLogged('place_bid')}"/>
             </div>
         </h:form>
     </h:body>
