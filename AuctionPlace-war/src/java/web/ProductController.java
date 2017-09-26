@@ -5,8 +5,9 @@
  */
 package web;
 
+import entities.Bid;
 import entities.Product;
-import entities.Customer;
+import entities.Product.Status;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -25,9 +26,15 @@ public class ProductController implements Serializable{
     
     @EJB
     private ejb.ProductBean ejbFacade;
+    @EJB
+    private ejb.BidBean bidejbFacade;
     private Product product;
     private String name;
     private String features;
+    private String picture;
+    private double startingAmount;
+    private double bidAmount;
+    private String bidErrorMessage;
     
     @Inject
     CustomerController customerController;
@@ -46,19 +53,55 @@ public class ProductController implements Serializable{
         this.setProducts(this.ejbFacade.getProducts());
     }
     
-    public String addProduct(Customer customer) {
-        this.ejbFacade.addProduct(new Product(
+    public String addProduct() {
+        String picture = "http://www.novelupdates.com/img/noimagefound.jpg";
+        if(this.getPicture() != null && !(this.getPicture().equals(""))) {
+            picture = this.getPicture();
+        }
+        Bid startingBid = new Bid(this.getStartingAmount(), 0.0, false, customerController.getCustomer());
+        Product newProduct = (new Product(
                 this.getName(),
+                picture,
                 null,
                 null,
                 null,
-                null,
-                null,
-                customer
+                Status.UNPUBLISHED,
+                customerController.getCustomer()
         ));
-        customerController.updateCustomer();
+        newProduct.setCurrentBid(startingBid);
+        this.ejbFacade.addProduct(newProduct);
+        customerController.getCustomer().getCatalog().add(newProduct);
         this.updateProducts();
         return "catalogue";
+    }
+    
+    public void publishProduct(Product p) {
+        if(p.getStatus() == Status.UNPUBLISHED) {
+            p.setStatus(Status.PUBLISHED);
+        }
+        else if (p.getStatus() == Status.PUBLISHED) {
+            p.setStatus(Status.UNPUBLISHED);
+        }
+        this.ejbFacade.updateProduct(p);
+        this.updateProducts();
+    }
+    
+    public Boolean isPublished(Product p) {
+        return p.getStatus() == Status.PUBLISHED;
+    }
+    
+    public String sendBid() {
+        if(this.getBidAmount() >  this.getProduct().getCurrentBid().getAmount()) {
+            this.getProduct().getCurrentBid().setAmount(this.getBidAmount());
+            this.getProduct().getCurrentBid().setBidder(customerController.getCustomer());
+            this.bidejbFacade.updateBid(this.getProduct().getCurrentBid());
+            this.setBidErrorMessage(null);
+            return "bid_receipt";
+        }
+        else {
+            this.setBidErrorMessage("Amount must be greater then current bid");
+            return "place_bid";
+        }
     }
 
     public Product getProduct() {
@@ -92,6 +135,40 @@ public class ProductController implements Serializable{
     public void setProducts(List<Product> products) {
         this.products = products;
     }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
+    public double getStartingAmount() {
+        return startingAmount;
+    }
+
+    public void setStartingAmount(double startingAmount) {
+        this.startingAmount = startingAmount;
+    }
+
+    public double getBidAmount() {
+        return bidAmount;
+    }
+
+    public void setBidAmount(double bidAmount) {
+        this.bidAmount = bidAmount;
+    }
+
+    public String getBidErrorMessage() {
+        return bidErrorMessage;
+    }
+
+    public void setBidErrorMessage(String bidErrorMessage) {
+        this.bidErrorMessage = bidErrorMessage;
+    }
+
+    
     
     
     

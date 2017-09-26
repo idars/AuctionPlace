@@ -38,6 +38,9 @@ public class CustomerController implements Serializable {
     
     private String errorMessage;
     private String successMessage;
+    
+    @Inject
+    ProductController productController;
 
     /**
      * Creates a new instance of CustomerBean
@@ -51,7 +54,6 @@ public class CustomerController implements Serializable {
     
     /**
      * Register a new user
-     * -> must check if email already exist
      */
     public String register() {
         boolean success = ejbFacade.RegisterNewCustomer(new Customer(
@@ -109,6 +111,7 @@ public class CustomerController implements Serializable {
     public String navigateIfLogged(String page) {
         if(this.isLogged()) {
             setErrorMessage(null);
+            productController.setBidErrorMessage(null);
             return page;
         }
         else {
@@ -127,6 +130,7 @@ public class CustomerController implements Serializable {
         this.getCustomer().setName(this.getName());
         this.getCustomer().setPhone(this.getPhone());
         this.ejbFacade.editCustomer(this.getCustomer());
+        productController.updateProducts();
         this.setSuccessMessage("Updates was succsessfull");
         return "user_profile";
     }

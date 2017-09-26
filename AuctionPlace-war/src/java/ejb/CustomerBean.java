@@ -62,8 +62,7 @@ public class CustomerBean extends AbstractFacade<Customer>{
     }
 
     public Customer getCustomerByEmail(String email) {
-        Query createNamedQuery = getEntityManager().createNamedQuery("Customer.findByEmail")
-                .setHint("javax.persistence.cache.storeMode", "REFRESH");
+        Query createNamedQuery = getEntityManager().createNamedQuery("Customer.findByEmail");
 
         createNamedQuery.setParameter("email", email);
 

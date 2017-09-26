@@ -20,8 +20,16 @@ and open the template in the editor.
         
         <h:form styleClass="form">
             <div class="container">
+                <img class="img-product" src="${productController.product.picture}"/><br/>
+                
                 <h:outputLabel value="Name" styleClass="label"/><br/>
-                <h:outputText value="#{productController.product.name}"/>
+                <h:outputText value="#{productController.product.name}"/><br/><br/>
+                
+                <h:outputLabel value="Features" styleClass="label"/><br/>
+                <h:outputText value="#{productController.product.features}"/><br/><br/>
+                
+                <h:outputLabel value="Current bid" styleClass="label"/><br/>
+                <h:outputText value="#{productController.product.currentBid.amount}"/><br/><br/>
                 
                 <h:commandButton id="submit"
                                  class="button-green" 

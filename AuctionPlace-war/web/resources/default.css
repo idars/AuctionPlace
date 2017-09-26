@@ -70,6 +70,13 @@ General css
     color: green;
 }
 
+.receipt-text {
+    text-align: center;
+    margin-top: 100px;
+    font-size: 50px;
+    color: green;
+}
+
 
 
 
@@ -193,6 +200,12 @@ Auction css
    border-radius: 50%;
    height: 60px;
    width: 60px;
+}
+
+.img-product-big {
+   border-radius: 50%;
+   height: 200px;
+   width: 200px;
 }
 
 .table-products {

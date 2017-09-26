@@ -6,10 +6,9 @@
 package entities;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.sql.Timestamp;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -45,7 +44,7 @@ public class Product implements Serializable {
     private Feedback feedback;
     
     @JoinColumn(name = "BID_ID", referencedColumnName = "ID")
-    @OneToOne(optional = false)
+    @OneToOne(cascade = CascadeType.ALL, optional = false)
     private Bid currentBid;
     
     @JoinColumn(name = "OWNER_ID", referencedColumnName = "ID")

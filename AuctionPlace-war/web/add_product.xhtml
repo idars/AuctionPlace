@@ -46,10 +46,26 @@ and open the template in the editor.
                     <f:validateLength minimum="2" maximum="100"/>
                 </h:inputText>
                 
+                <h:outputLabel value="Image URL (optional)" styleClass="label"/>
+                <h:inputText id="image" 
+                             label="Image"
+                             styleClass="input"
+                             p:placeholder="http://www.novelupdates.com/img/noimagefound.jpg"
+                             value="#{productController.picture}">
+                </h:inputText>
+                
+                <h:outputLabel value="Starting Amount" styleClass="label"/>
+                <h:inputText id="amount" 
+                             label="Amount"
+                             styleClass="input"
+                             p:placeholder="00.00$"
+                             value="#{productController.startingAmount}">
+                </h:inputText>
+                
                 <h:commandButton id="submit"
                                  class="button-green" 
                                  value="Add Product"
-                                 action="#{productController.addProduct(customerController.customer)}"/>
+                                 action="#{productController.addProduct()}"/>
             </div>
         </h:form>
     </h:body>

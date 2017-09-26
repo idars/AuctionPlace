@@ -27,20 +27,23 @@ and open the template in the editor.
        <tr>
           <th>Picture</th>
           <th>Name</th>
-          <th>Current bid</th>
           <th>Time left (hh:mm)</th>
+          <th>Current bid</th>
+          <th>Bidder</th>
           <th width="230"></th>
        </tr>
             
             <c:forEach items="${productController.products}" var="product">
+                <c:if test="${productController.isPublished(product)}">
             <tr>
-                <td><img class="img-product" src="http://www.pngmart.com/files/1/Book-PNG-HD.png"/></td>
+                <td><img class="img-product" src="${product.picture}"/></td>
                 <h:form><td>
                         <h:commandLink action="product_details">${product.name}
-                            <f:actionListener binding="#{productBean.setProduct(product)}" />
+                            <f:actionListener binding="#{productController.setProduct(product)}" />
                         </h:commandLink></td></h:form>
-                <td>0$</td>
                 <td>15:22</td>
+                <td>${product.currentBid.amount}</td>
+                <td>${product.currentBid.bidder.name}</td>
                 <h:form><td>
                         <h:commandButton id="submit" 
                                          value="Place a bid"
@@ -49,6 +52,7 @@ and open the template in the editor.
                         </h:commandButton>
                     </td></h:form>
             </tr>
+            </c:if>
         </c:forEach>
             
         </table>

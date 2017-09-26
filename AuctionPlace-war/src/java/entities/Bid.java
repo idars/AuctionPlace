@@ -6,6 +6,7 @@
 package entities;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -34,15 +35,13 @@ public class Bid implements Serializable {
     private Customer bidder;
 
     public Bid() {
-        this.id = null;
         this.amount = null;
         this.maxAmount = null;
         this.automaticBidding = null;
         this.bidder = null;
     }
 
-    public Bid(Long id, Double amount, Double maxAmount, Boolean automaticBidding, Customer bidder) {
-        this.id = id;
+    public Bid(Double amount, Double maxAmount, Boolean automaticBidding, Customer bidder) {
         this.amount = amount;
         this.maxAmount = maxAmount;
         this.automaticBidding = automaticBidding;
