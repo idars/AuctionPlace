@@ -17,7 +17,7 @@ and open the template in the editor.
     
     <h:body>
         <ui:include src="navbar.xhtml"><ui:param name="active" value="control_panel" /></ui:include>
-        <div class="div-control-panel" onclick="location.href='user_profile.xhtml'">
+        <div class="div-control-panel" onclick="location.href='user_profile.xhtml'; '#{customerController.clearInputFields()}'">
             <img class="img-profile" src="http://www.freeiconspng.com/uploads/profile-icon-9.png"/>
             <div class="div-text-control-panel">My Profile</div>
         </div>

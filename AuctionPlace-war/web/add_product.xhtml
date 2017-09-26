@@ -49,7 +49,7 @@ and open the template in the editor.
                 <h:commandButton id="submit"
                                  class="button-green" 
                                  value="Add Product"
-                                 action="catalogue.xhtml"/>
+                                 action="#{productController.addProduct(customerController.customer)}"/>
             </div>
         </h:form>
     </h:body>

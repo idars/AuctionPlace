@@ -6,18 +6,14 @@
 package web;
 
 import entities.Product;
+import entities.Customer;
 import java.io.Serializable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
-import javax.enterprise.inject.Produces;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -27,21 +23,16 @@ import javax.servlet.http.HttpSession;
 @SessionScoped
 public class ProductController implements Serializable{
     
-    private Product[] products = {
-        new Product("Bibel", "null", "null", 0.0, null, null),
-        new Product("Bibel 2", "null", "null", 0.0, null, null),
-        new Product("Bibel 3", "null", "null", 0.0, null, null),
-        new Product("Bibel 4", "null", "null", 0.0, null, null),
-    };
-    
-    //@EJB
-    //private com.forest.ejb.UserBean ejbFacade;
+    @EJB
+    private ejb.ProductBean ejbFacade;
     private Product product;
     private String name;
     private String features;
     
     @Inject
-    //CustomerController customerController;
+    CustomerController customerController;
+    
+    List<Product> products;
 
 
     /**
@@ -50,8 +41,24 @@ public class ProductController implements Serializable{
     public ProductController() {
     }
     
-    public Product[] getProducts() {
-        return products;
+    @PostConstruct
+    public void updateProducts() {
+        this.setProducts(this.ejbFacade.getProducts());
+    }
+    
+    public String addProduct(Customer customer) {
+        this.ejbFacade.addProduct(new Product(
+                this.getName(),
+                null,
+                null,
+                null,
+                null,
+                null,
+                customer
+        ));
+        customerController.updateCustomer();
+        this.updateProducts();
+        return "catalogue";
     }
 
     public Product getProduct() {
@@ -76,6 +83,14 @@ public class ProductController implements Serializable{
 
     public void setFeatures(String features) {
         this.features = features;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
     
     

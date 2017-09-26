@@ -5,12 +5,14 @@
  */
 package ejb;
 
+import java.util.List;
 import entities.Customer;
 import entities.Product;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -29,5 +31,13 @@ public class ProductBean extends AbstractFacade<Product>{
     @Override
     protected EntityManager getEntityManager() {
         return em;
+    }
+    
+    public List<Product> getProducts() {
+        return this.findAll();
+    }
+    
+    public void addProduct(Product product) {
+        super.create(product);
     }
 }

@@ -9,7 +9,8 @@ and open the template in the editor.
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f = "http://java.sun.com/jsf/core"
       xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     
     <h:head>
         <title>User Profile Page</title>
@@ -23,33 +24,23 @@ and open the template in the editor.
 
         <h:form styleClass="form">
             <div class="container">
+                <h:outputLabel value="Email" styleClass="label"/><br/>
+                <h:outputLabel value="#{customerController.customer.email}"/><br/><br/>
+                
                 <h:outputLabel value="Full Name" styleClass="label"/>
                 <h:inputText id="name"
                              label="Full Name"
                              styleClass="input"
-                             p:placeholder="#{customerController.customer.name}"
                              validatorMessage="Full name must be atleast 2 characters"
                              value="#{customerController.name}">
                     
                     <f:validateLength minimum="2" maximum="30"/>
                 </h:inputText>
                 
-                <h:outputLabel value="Email" styleClass="label"/>
-                <h:inputText id="email" 
-                             label="Email"
-                             styleClass="input"
-                             p:placeholder="#{customerBean.customer.email}"
-                             validatorMessage="Email must be valid"
-                             value="#{customerController.email}">
-                
-                    <f:validateRegex pattern="\S+@\S+"/>
-                </h:inputText>
-                
                 <h:outputLabel value="Phone" styleClass="label"/>
                 <h:inputText id="phone" 
                              label="Phone"
                              styleClass="input"
-                             p:placeholder="#{customerBean.customer.phone}"
                              validatorMessage="Phone number must be 8 didgets"
                              value="#{customerController.phone}">
                 
@@ -59,8 +50,12 @@ and open the template in the editor.
                 <h:commandButton id="submit"
                                  class="button-green" 
                                  value="Save"
-                                 action="index.html"/>
+                                 action="#{customerController.saveChanges()}"/>
             </div>
         </h:form>
+        <br/>
+        <c:if test = "${customerController.successMessage != null}">
+            <h:outputLabel value="#{customerController.successMessage}" styleClass="successMessage"/>
+        </c:if>
     </h:body>
 </html>

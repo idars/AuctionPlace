@@ -37,11 +37,16 @@ public class CustomerController implements Serializable {
     private Double rating;
     
     private String errorMessage;
+    private String successMessage;
 
     /**
      * Creates a new instance of CustomerBean
      */
     public CustomerController() {
+    }
+    
+    public void updateCustomer() {
+        this.setCustomer(ejbFacade.loginCustomer(this.getCustomer().getEmail(), this.getCustomer().getPassword()));
     }
     
     /**
@@ -112,7 +117,19 @@ public class CustomerController implements Serializable {
         }
     }
     
+    public void clearInputFields() {
+        this.setName(this.getCustomer().getName());
+        this.setPhone(this.getCustomer().getPhone());
+        this.setSuccessMessage(null);
+    }
     
+    public String saveChanges() {
+        this.getCustomer().setName(this.getName());
+        this.getCustomer().setPhone(this.getPhone());
+        this.ejbFacade.editCustomer(this.getCustomer());
+        this.setSuccessMessage("Updates was succsessfull");
+        return "user_profile";
+    }
 
     /**
      * @return the customer
@@ -198,6 +215,14 @@ public class CustomerController implements Serializable {
 
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
+    }
+
+    public String getSuccessMessage() {
+        return successMessage;
+    }
+
+    public void setSuccessMessage(String successMessage) {
+        this.successMessage = successMessage;
     }
     
     

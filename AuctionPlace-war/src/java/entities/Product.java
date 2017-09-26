@@ -59,15 +59,17 @@ public class Product implements Serializable {
         this.rating = 0.0;
         this.whenBiddingCloses = null;
         this.status = null;
+        this.owner = null;
     }
 
-    public Product(String name, String picture, String features, Double rating, Timestamp whenBiddingCloses, Status status) {
+    public Product(String name, String picture, String features, Double rating, Timestamp whenBiddingCloses, Status status, Customer owner) {
         this.name = name;
         this.picture = picture;
         this.features = features;
         this.rating = rating;
         this.whenBiddingCloses = whenBiddingCloses;
         this.status = status;
+        this.owner = owner;
     }
 
     public Long getId() {
