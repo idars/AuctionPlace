@@ -6,15 +6,18 @@
 package entities;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -36,19 +39,21 @@ public class Product implements Serializable {
     private String picture;
     private String features;
     private Double rating;
-    private Timestamp whenBiddingCloses;
     private Status status;
     
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date whenBiddingCloses;
+    
+    @OneToOne
     @JoinColumn(name = "FEEDBACK_ID", referencedColumnName = "ID")
-    @OneToOne(optional = false)
     private Feedback feedback;
     
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "BID_ID", referencedColumnName = "ID")
-    @OneToOne(cascade = CascadeType.ALL, optional = false)
     private Bid currentBid;
     
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "OWNER_ID", referencedColumnName = "ID")
-    @ManyToOne(optional = false)
     private Customer owner;
 
     public Product() {
@@ -61,7 +66,7 @@ public class Product implements Serializable {
         this.owner = null;
     }
 
-    public Product(String name, String picture, String features, Double rating, Timestamp whenBiddingCloses, Status status, Customer owner) {
+    public Product(String name, String picture, String features, Double rating, Date whenBiddingCloses, Status status, Customer owner) {
         this.name = name;
         this.picture = picture;
         this.features = features;
@@ -111,11 +116,11 @@ public class Product implements Serializable {
         this.rating = rating;
     }
 
-    public Timestamp getWhenBiddingCloses() {
+    public Date getWhenBiddingCloses() {
         return whenBiddingCloses;
     }
 
-    public void setWhenBiddingCloses(Timestamp whenBiddingCloses) {
+    public void setWhenBiddingCloses(Date whenBiddingCloses) {
         this.whenBiddingCloses = whenBiddingCloses;
     }
 

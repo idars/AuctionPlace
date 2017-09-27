@@ -37,7 +37,8 @@ and open the template in the editor.
                 <h:inputText id="amount" 
                                styleClass="input"
                                p:placeholder="0.0$"
-                               value="#{productController.bidAmount}"/>
+                               value="#{productController.bidAmount}"
+                               validator="#{bidController.validateBidValue}"/>
                 
                 <c:if test = "${productController.bidErrorMessage != null}">
                     <h:outputLabel value="#{productController.bidErrorMessage}" styleClass="errorMessage"/>

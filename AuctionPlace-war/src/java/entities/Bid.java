@@ -30,8 +30,8 @@ public class Bid implements Serializable {
     private Double maxAmount;
     private Boolean automaticBidding;
     
+    @ManyToOne
     @JoinColumn(name = "BIDDER_ID", referencedColumnName = "ID")
-    @ManyToOne(optional = false)
     private Customer bidder;
 
     public Bid() {

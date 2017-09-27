@@ -29,8 +29,8 @@ public class Feedback implements Serializable {
     
     private String comment;
     
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "AUTHOR_ID", referencedColumnName = "ID")
-    @ManyToOne(optional = false)
     private Customer author;
 
     public Feedback() {
