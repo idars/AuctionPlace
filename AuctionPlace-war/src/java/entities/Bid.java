@@ -48,10 +48,6 @@ public class Bid implements Serializable {
         this.bidder = bidder;
     }
     
-    
-    
-    
-
     public Long getId() {
         return id;
     }

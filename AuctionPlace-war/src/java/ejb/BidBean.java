@@ -34,4 +34,12 @@ public class BidBean extends AbstractFacade<Bid> {
     public void updateBid(Bid b) {
         this.edit(b);
     }
+    
+    public boolean register(Bid bid) {
+        // If bid is higher than current bid
+        super.create(bid);
+        return true;
+        
+        // notify Product?
+    }
 }
