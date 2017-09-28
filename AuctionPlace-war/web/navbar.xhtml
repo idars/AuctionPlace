@@ -47,17 +47,15 @@ and open the template in the editor.
         <c:if test = "${active == 'auction'}">
             <li class="li-navbar-active"><a href="auction.xhtml">Auction home</a></li>
             <h:form style="display: inline"><li class="li-navbar">
-                        <h:commandLink class="commandLink" action="login.xhtml">Control panel
-                            <f:actionListener binding="#{customerController.setErrorMessage('Please login to continue')}" />
-                        </h:commandLink></li></h:form>
+                <h:commandLink class="commandLink" action="#{customerController.navigateIfLogged('control_panel')}">Control panel
+                </h:commandLink></li></h:form>
             <li class="li-navbar-login"><a href="login.xhtml">Login</a></li>
         </c:if>
         <c:if test = "${active == 'login'}">
             <li class="li-navbar"><a href="auction.xhtml">Auction home</a></li>
             <h:form style="display: inline"><li class="li-navbar">
-                        <h:commandLink class="commandLink" action="login.xhtml">Control panel
-                            <f:actionListener binding="#{customerController.setErrorMessage('Please login to continue')}" />
-                        </h:commandLink></li></h:form>
+                <h:commandLink class="commandLink" action="#{customerController.navigateIfLogged('control_panel')}">Control panel
+                </h:commandLink></li></h:form>
             <li class="li-navbar-login-active"><a href="login.xhtml">Login</a></li>
         </c:if>
         </c:if>

@@ -5,6 +5,7 @@
  */
 package web;
 
+import ejb.CustomerBean;
 import entities.Customer;
 import java.io.Serializable;
 import java.util.logging.Level;
@@ -38,9 +39,13 @@ public class CustomerController implements Serializable {
     
     private String errorMessage;
     private String successMessage;
+    private String continuePage;
     
     @Inject
     ProductController productController;
+    
+    @Inject
+    BidController bidController;
 
     /**
      * Creates a new instance of CustomerBean
@@ -81,7 +86,14 @@ public class CustomerController implements Serializable {
         if(customer != null) {
             setErrorMessage(null);
             setCustomer(customer);
-            return "auction";
+            String page = this.getContinuePage();
+            if(page != null) {
+                this.setContinuePage(null);
+                return page;
+            }
+            else {
+                return "auction";
+            }
         }
         else {
             setErrorMessage("Wrong email or password");
@@ -97,25 +109,15 @@ public class CustomerController implements Serializable {
         return (getCustomer() != null);
     }
     
-    public String testLogin() {
-        setCustomer(new Customer(
-                "Test User",
-                "test@gmail.com",
-                "12345678",
-                "12345678",
-                0.0
-        ));
-        return "auction";
-    }
-    
     public String navigateIfLogged(String page) {
         if(this.isLogged()) {
-            setErrorMessage(null);
-            productController.setBidErrorMessage(null);
+            bidController.clearInputFields();
+            this.setErrorMessage(null);
             return page;
         }
         else {
-            setErrorMessage("Please login to continue");
+            this.setContinuePage(page);
+            this.setErrorMessage("Please login to continue");
             return "login";
         }
     }
@@ -227,6 +229,38 @@ public class CustomerController implements Serializable {
 
     public void setSuccessMessage(String successMessage) {
         this.successMessage = successMessage;
+    }
+
+    public CustomerBean getEjbFacade() {
+        return ejbFacade;
+    }
+
+    public void setEjbFacade(CustomerBean ejbFacade) {
+        this.ejbFacade = ejbFacade;
+    }
+
+    public ProductController getProductController() {
+        return productController;
+    }
+
+    public void setProductController(ProductController productController) {
+        this.productController = productController;
+    }
+
+    public BidController getBidController() {
+        return bidController;
+    }
+
+    public void setBidController(BidController bidController) {
+        this.bidController = bidController;
+    }
+
+    public String getContinuePage() {
+        return continuePage;
+    }
+
+    public void setContinuePage(String continuePage) {
+        this.continuePage = continuePage;
     }
     
     

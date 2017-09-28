@@ -27,7 +27,7 @@ and open the template in the editor.
        <tr>
           <th>Picture</th>
           <th>Name</th>
-          <th>Time left (hh:mm)</th>
+          <th>Time left (dd:hh:mm:ss)</th>
           <th>Current bid</th>
           <th>Bidder</th>
           <th>Status</th>
@@ -37,20 +37,44 @@ and open the template in the editor.
             <c:forEach items="${customerController.customer.catalog}" var="product">
             <tr>
                 <td><img class="img-product" src="${product.picture}"/></td>
+                
+                <c:if test = "${productController.isSold(product) == false}">
+                <h:form><td>
+                        <h:commandLink action="product_change">${product.name} (click to edit)
+                            <f:actionListener binding="#{productController.editProduct(product)}" />
+                        </h:commandLink></td></h:form>
+                </c:if>
+                <c:if test = "${productController.isSold(product) == true}">
                 <h:form><td>
                         <h:commandLink action="product_details">${product.name}
-                            <f:actionListener binding="#{customerController.setProduct(product)}" />
+                            <f:actionListener binding="#{productController.setProduct(product)}" />
                         </h:commandLink></td></h:form>
-                <td>15:22</td>
+                </c:if>
+                <td>${productController.formatTimeLeft(product)}</td>
                 <td>${product.currentBid.amount}</td>
-                <td>${product.currentBid.bidder.name}</td>
+                <c:if test = "${product.currentBid.bidder.email == customerController.customer.email}">
+                    <td style="color: green">${product.currentBid.bidder.name}</td>
+                </c:if>
+                <c:if test = "${product.currentBid.bidder.email != customerController.customer.email}">
+                    <td>${product.currentBid.bidder.name}</td>
+                </c:if>
                 <td>${product.status}</td>
+                <c:if test = "${productController.isUnPublished(product)}">
                 <h:form><td>
                         <h:commandButton id="submit" 
-                                         value="Publish / Unpublish"
+                                         value="Publish Product"
                                          action="#{productController.publishProduct(product)}">
                         </h:commandButton>
                     </td></h:form>
+                </c:if>
+                <c:if test = "${productController.isSold(product)}">
+                <h:form><td>
+                        <h:commandButton id="submit" 
+                                         value="See Feedback"
+                                         action="${productController.seeFeedback(product)}">
+                        </h:commandButton>
+                    </td></h:form>
+                </c:if>
             </tr>
         </c:forEach>
             

@@ -39,8 +39,7 @@ public class Feedback implements Serializable {
         this.author = null;
     }
     
-    public Feedback(Long id, String comment, Customer author) {
-        this.id = id;
+    public Feedback(String comment, Customer author) {
         this.comment = comment;
         this.author = author;
     }

@@ -6,6 +6,7 @@
 package web;
 
 import entities.Bid;
+import entities.Feedback;
 import entities.Product;
 import entities.Product.Status;
 import java.io.Serializable;
@@ -15,6 +16,8 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.sql.Timestamp;
+import java.util.concurrent.TimeUnit;
 
 /**
  *
@@ -26,15 +29,17 @@ public class ProductController implements Serializable{
     
     @EJB
     private ejb.ProductBean ejbFacade;
-    @EJB
-    private ejb.BidBean bidejbFacade;
     private Product product;
     private String name;
     private String features;
     private String picture;
+    private int ratings;
     private double startingAmount;
-    private double bidAmount;
-    private String bidErrorMessage;
+    private int timeLeftHours;
+    private int timeLeftMinutes;
+    private String feedbackMessage;
+    
+    private String successMessage;
     
     @Inject
     CustomerController customerController;
@@ -45,8 +50,7 @@ public class ProductController implements Serializable{
     /**
      * Creates a new instance of ProductBean
      */
-    public ProductController() {
-    }
+    public ProductController() {}
     
     @PostConstruct
     public void updateProducts() {
@@ -54,17 +58,26 @@ public class ProductController implements Serializable{
     }
     
     public String addProduct() {
+        
+        // check Product Image
         String picture = "http://www.novelupdates.com/img/noimagefound.jpg";
         if(this.getPicture() != null && !(this.getPicture().equals(""))) {
             picture = this.getPicture();
         }
+        
+        // check When bidding closes
+        Timestamp time = new Timestamp(System.currentTimeMillis()
+                + this.getTimeLeftHours() * 3600000 
+                + this.getTimeLeftMinutes() * 60000);
+        
+        // Create starting bid and new Product
         Bid startingBid = new Bid(this.getStartingAmount(), 0.0, false, customerController.getCustomer());
         Product newProduct = (new Product(
                 this.getName(),
                 picture,
-                null,
-                null,
-                null,
+                this.getFeatures(),
+                0,
+                time,
                 Status.UNPUBLISHED,
                 customerController.getCustomer()
         ));
@@ -86,23 +99,72 @@ public class ProductController implements Serializable{
         this.updateProducts();
     }
     
-    public Boolean isPublished(Product p) {
+    public boolean isPublished(Product p) {
         return p.getStatus() == Status.PUBLISHED;
     }
     
-    public String sendBid() {
-        if(this.getBidAmount() >  this.getProduct().getCurrentBid().getAmount()) {
-            this.getProduct().getCurrentBid().setAmount(this.getBidAmount());
-            this.getProduct().getCurrentBid().setBidder(customerController.getCustomer());
-            this.bidejbFacade.updateBid(this.getProduct().getCurrentBid());
-            this.setBidErrorMessage(null);
-            return "bid_receipt";
+    public boolean isUnPublished(Product p) {
+        return p.getStatus() == Status.UNPUBLISHED;
+    }
+    
+    public boolean isSold(Product p) {
+        return p.getStatus() == Status.SOLD;
+    }
+    
+    public String formatTimeLeft(Product p) {
+        Long millis = p.getWhenBiddingCloses().getTime() - System.currentTimeMillis();
+        
+        String timeLeft = String.format("%02d:%02d:%02d:%02d", TimeUnit.MILLISECONDS.toDays(millis),
+        TimeUnit.MILLISECONDS.toHours(millis)   % TimeUnit.DAYS.toHours(1),
+        TimeUnit.MILLISECONDS.toMinutes(millis) % TimeUnit.HOURS.toMinutes(1),
+        TimeUnit.MILLISECONDS.toSeconds(millis) % TimeUnit.MINUTES.toSeconds(1));
+        
+        if(millis < 0) {
+            if(this.isSold(p) == false) {
+                p.setStatus(Status.SOLD);
+                this.ejbFacade.updateProduct(p);
+                this.updateProducts();
+                
+            }
+            return "SOLD";
         }
         else {
-            this.setBidErrorMessage("Amount must be greater then current bid");
-            return "place_bid";
+            return timeLeft;
         }
     }
+    
+    public void sendFeedback() {
+        Feedback f = new Feedback(this.getFeedbackMessage(), customerController.getCustomer());
+        this.getProduct().setRating(this.getRatings());
+        this.getProduct().setFeedback(f);
+        this.ejbFacade.updateProduct(this.getProduct());
+        this.updateProducts();
+    }
+    
+    public String seeFeedback(Product p) {
+        this.setProduct(p);
+        return "product_details";
+    }
+    
+    public void editProduct(Product p) {
+        this.setProduct(p);
+        this.setName(p.getName());
+        this.setPicture(p.getPicture());
+        this.setFeatures(p.getFeatures());
+        this.setSuccessMessage(null);
+    }
+    
+    public String saveChanges() {
+        this.getProduct().setName(this.getName());
+        this.getProduct().setFeatures(this.getFeatures());
+        this.getProduct().setPicture(this.getPicture());
+        this.ejbFacade.updateProduct(this.getProduct());
+        this.updateProducts();
+        this.setSuccessMessage("Updates was succsessfull");
+        return "product_change";
+    }
+    
+    
 
     public Product getProduct() {
         return product;
@@ -152,20 +214,44 @@ public class ProductController implements Serializable{
         this.startingAmount = startingAmount;
     }
 
-    public double getBidAmount() {
-        return bidAmount;
+    public int getTimeLeftHours() {
+        return timeLeftHours;
     }
 
-    public void setBidAmount(double bidAmount) {
-        this.bidAmount = bidAmount;
+    public void setTimeLeftHours(int timeLeftHours) {
+        this.timeLeftHours = timeLeftHours;
     }
 
-    public String getBidErrorMessage() {
-        return bidErrorMessage;
+    public int getTimeLeftMinutes() {
+        return timeLeftMinutes;
     }
 
-    public void setBidErrorMessage(String bidErrorMessage) {
-        this.bidErrorMessage = bidErrorMessage;
+    public void setTimeLeftMinutes(int timeLeftMinutes) {
+        this.timeLeftMinutes = timeLeftMinutes;
+    }
+
+    public int getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(int ratings) {
+        this.ratings = ratings;
+    }
+
+    public String getFeedbackMessage() {
+        return feedbackMessage;
+    }
+
+    public void setFeedbackMessage(String feedbackMessage) {
+        this.feedbackMessage = feedbackMessage;
+    }
+
+    public String getSuccessMessage() {
+        return successMessage;
+    }
+
+    public void setSuccessMessage(String successMessage) {
+        this.successMessage = successMessage;
     }
 
     

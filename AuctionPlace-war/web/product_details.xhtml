@@ -7,7 +7,10 @@ and open the template in the editor.
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f = "http://java.sun.com/jsf/core">
     
     <h:head>
         <title>Product Details Page</title>
@@ -17,6 +20,7 @@ and open the template in the editor.
     
     <h:body>
         <ui:include src="navbar.xhtml"><ui:param name="active" value="auction" /></ui:include>
+        <h:messages style="color:red"></h:messages>
         
         <h:form styleClass="form">
             <div class="container">
@@ -28,14 +32,85 @@ and open the template in the editor.
                 <h:outputLabel value="Features" styleClass="label"/><br/>
                 <h:outputText value="#{productController.product.features}"/><br/><br/>
                 
+                <c:if test = "${productController.isSold(productController.product) == false}">
+                <h:outputLabel value="Time left (dd:hh:mm:ss)" styleClass="label"/><br/>
+                <h:outputText value="#{productController.formatTimeLeft(productController.product)}"/><br/><br/>
+                </c:if>
+                
+                <c:if test = "${productController.isSold(productController.product) == true}">
+                <h:outputLabel value="Time left (dd:hh:mm:ss)" styleClass="label"/><br/>
+                <h:outputText value="SOLD"/><br/><br/>
+                </c:if>
+                
                 <h:outputLabel value="Current bid" styleClass="label"/><br/>
                 <h:outputText value="#{productController.product.currentBid.amount}"/><br/><br/>
                 
+                <c:if test = "${productController.isSold(productController.product) == false}">
                 <h:commandButton id="submit"
                                  class="button-green" 
                                  value="Place a Bid"
                                  action="#{customerController.navigateIfLogged('place_bid')}"/>
-            </div>
+                
+                </c:if>
+                </div>
+        </h:form><br/><br/>
+                
+                
+                
+                
+                <c:if test = "${productController.isSold(productController.product) 
+                                and productController.product.currentBid.bidder.email 
+                                == customerController.customer.email
+                                and productController.product.feedback == null}">
+                
+                    <h:form styleClass="form">
+                <div class="container">
+                <h:outputLabel value="Rate this Product (1-5)" styleClass="label"/>
+                <h:inputText id="rating" 
+                             styleClass="input"
+                             p:placeholder="1-5"
+                             required="true"
+                             requiredMessage="Rating Required"
+                             validatorMessage="Rating must be beetween 1 and 5"
+                             value="#{productController.ratings}">
+                
+                    <f:validateLongRange minimum="1" maximum="5"/>
+                </h:inputText>
+                
+                <h:outputLabel value="Give feedback" styleClass="label"/>
+                <h:inputText id="feedback" 
+                             styleClass="input"
+                             p:placeholder="Enter feedback message"
+                             required="true"
+                             requiredMessage="Feedback Required"
+                             value="#{productController.feedbackMessage}"/>
+                
+                <h:commandButton id="send"
+                                 class="button-green" 
+                                 value="Send Feedback"
+                                 action="#{productController.sendFeedback()}"/>
+                </div>
         </h:form>
+                </c:if>
+                    
+                
+                
+                
+                
+                <c:if test = "${productController.isSold(productController.product)
+                                and productController.product.feedback != null}">
+                    
+                <h:form styleClass="form">
+                <div class="container">
+                    
+                <h:outputLabel value="Rating" styleClass="label"/><br/>
+                <h:outputLabel value="#{productController.product.rating}"/><br/><br/>
+                
+                <h:outputLabel value="Feedback" styleClass="label"/><br/>
+                <h:outputLabel value="#{productController.product.feedback.comment}"/><br/><br/>
+                
+                </div>
+            </h:form>
+            </c:if>
     </h:body>
 </html>

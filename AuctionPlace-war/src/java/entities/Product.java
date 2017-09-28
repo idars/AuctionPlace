@@ -38,13 +38,13 @@ public class Product implements Serializable {
     private String name;
     private String picture;
     private String features;
-    private Double rating;
+    private int rating;
     private Status status;
     
     @Temporal(TemporalType.TIMESTAMP)
     private Date whenBiddingCloses;
     
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "FEEDBACK_ID", referencedColumnName = "ID")
     private Feedback feedback;
     
@@ -60,13 +60,13 @@ public class Product implements Serializable {
         this.name = "";
         this.picture = "";
         this.features = "";
-        this.rating = 0.0;
+        this.rating = 0;
         this.whenBiddingCloses = null;
         this.status = null;
         this.owner = null;
     }
 
-    public Product(String name, String picture, String features, Double rating, Date whenBiddingCloses, Status status, Customer owner) {
+    public Product(String name, String picture, String features, int rating, Date whenBiddingCloses, Status status, Customer owner) {
         this.name = name;
         this.picture = picture;
         this.features = features;
@@ -108,11 +108,11 @@ public class Product implements Serializable {
         this.features = features;
     }
 
-    public double getRating() {
+    public int getRating() {
         return rating;
     }
 
-    public void setRating(Double rating) {
+    public void setRating(int rating) {
         this.rating = rating;
     }
 

@@ -30,6 +30,16 @@ and open the template in the editor.
                 <h:outputLabel value="Features" styleClass="label"/><br/>
                 <h:outputText value="#{productController.product.features}"/><br/><br/>
                 
+                <c:if test = "${productController.isSold(productController.product) == false}">
+                <h:outputLabel value="Time left (dd:hh:mm:ss)" styleClass="label"/><br/>
+                <h:outputText value="#{productController.formatTimeLeft(productController.product)}"/><br/><br/>
+                </c:if>
+                
+                <c:if test = "${productController.isSold(productController.product) == true}">
+                <h:outputLabel value="Time left (dd:hh:mm:ss)" styleClass="label"/><br/>
+                <h:outputText value="SOLD"/><br/><br/>
+                </c:if>
+                
                 <h:outputLabel value="Current bid" styleClass="label"/><br/>
                 <h:outputText value="#{productController.product.currentBid.amount}"/><br/><br/>
                 
@@ -37,18 +47,32 @@ and open the template in the editor.
                 <h:inputText id="amount" 
                                styleClass="input"
                                p:placeholder="0.0$"
-                               value="#{productController.bidAmount}"
-                               validator="#{bidController.validateBidValue}"/>
+                               value="#{bidController.amount}"/>
                 
-                <c:if test = "${productController.bidErrorMessage != null}">
-                    <h:outputLabel value="#{productController.bidErrorMessage}" styleClass="errorMessage"/>
+                <h:commandButton id="toogle"
+                                 class="button-blue"
+                                 value="Enable / Disable Automatic Bidding"
+                                 action="#{bidController.toggleAutomaticBiddding()}"/><br/><br/>
+                
+                <c:if test = "${bidController.automaticBidding == true}">
+                    (New bids are sent in on your behalf up to the max amount if<br/>
+                    someone outbids you, new bids will be sent 1.0$ heigher then current heigest)<br/><br/>
+                    <h:outputLabel value="Max Amount " styleClass="label"/>
+                    <h:inputText id="maxAmount" 
+                               styleClass="input"
+                               p:placeholder="0.0$"
+                               value="#{bidController.maxAmount}"/>
+                </c:if>
+                
+                <c:if test = "${bidController.errorMessage != null}">
+                    <h:outputLabel value="#{bidController.errorMessage}" styleClass="errorMessage"/>
                     <br/><br/>
                 </c:if>
                 
                 <h:commandButton id="submit"
                                  class="button-green" 
                                  value="Send bid"
-                                 action="#{productController.sendBid()}"/>
+                                 action="#{bidController.sendBid()}"/>
             </div>
         </h:form>
     </h:body>

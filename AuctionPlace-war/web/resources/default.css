@@ -56,6 +56,20 @@ General css
     opacity: 0.8;
 }
 
+.button-blue {
+    background-color: blueviolet;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 50%;
+}
+
+.button-blue:hover {
+    opacity: 0.8;
+}
+
 .text-center {
     text-align: center;
 }
