@@ -8,6 +8,7 @@ and open the template in the editor.
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:f = "http://java.sun.com/jsf/core">
     
@@ -22,6 +23,18 @@ and open the template in the editor.
         
         <div class="table-products">
         <h1 class="title">Products</h1>
+        <h:form>
+        <h:inputText id="search"  
+                             styleClass="search-field"
+                             p:placeholder="Search"
+                             value="#{productController.searchString}"/>
+        
+                    <h:commandButton id="submit" 
+                                     class="search-button"
+                                     value="Search"
+                                     action="auction">
+                    </h:commandButton>
+        </h:form>
         
         <table cellspacing="0">
        <tr>
@@ -34,7 +47,8 @@ and open the template in the editor.
        </tr>
             
             <c:forEach items="${productController.products}" var="product">
-                <c:if test="${productController.isPublished(product)}">
+                <c:if test="${productController.isPublished(product) 
+                              and productController.filter(product)}">
             <tr>
                 <td><img class="img-product" src="${product.picture}"/></td>
                 <h:form><td>
@@ -65,7 +79,8 @@ and open the template in the editor.
                 
                 <c:if test="${productController.isSold(product) and 
                               product.currentBid.bidder.email
-                              == customerController.customer.email}">
+                              == customerController.customer.email
+                              and productController.filter(product)}">
             <tr>
                 <td><img class="img-product" src="${product.picture}"/></td>
                 <h:form><td>

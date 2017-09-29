@@ -6,11 +6,11 @@
 package ejb;
 
 import entities.Customer;
-import util.LoginHelper;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import util.LoginHelper;
 
 /**
  *
@@ -33,13 +33,13 @@ public class CustomerBean extends AbstractFacade<Customer>{
         return em;
     }
     
-    public boolean RegisterNewCustomer(Customer customer) {
+    public boolean RegisterNewCustomer(Customer customer) throws Exception {
 
         // check if user exists
         if (getCustomerByEmail(customer.getEmail()) == null) {
             
-            //byte[] salt = LoginHelper.generateSalt();
-            //byte[] encryptedPassword = LoginHelper.getEncryptedPassword(customer.getPassword(), salt)
+            // encrypt password with MD5 which is unsecure but fast to implement
+            customer.setPassword(LoginHelper.encryptPassword(customer.getPassword()));
             
             super.create(customer);
             return true;
@@ -48,12 +48,9 @@ public class CustomerBean extends AbstractFacade<Customer>{
         }
     }
     
-    public Customer loginCustomer(String email, String password) {
+    public Customer loginCustomer(String email, String password) throws Exception {
         Customer customer = getCustomerByEmail(email);
-        if(customer != null && customer.getPassword().equals(password)) {
-            
-            //LoginHelper.authenticate(password, customer.getPassword(), salt)
-            
+        if(customer != null && customer.getPassword().equals(LoginHelper.encryptPassword(password))) {         
             return customer;
         }
         else {

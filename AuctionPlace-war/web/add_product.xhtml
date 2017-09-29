@@ -68,8 +68,10 @@ and open the template in the editor.
                              label="Hours"
                              styleClass="input"
                              p:placeholder="Hours"
+                             validatorMessage="To many hours"
                              value="#{productController.timeLeftHours}">
                     
+                    <f:validateLongRange minimum="0" maximum="500"/>
                 </h:inputText>
                 <h:outputLabel value="Minutes" styleClass="label"/>
                 <h:inputText id="timeMinutes" 

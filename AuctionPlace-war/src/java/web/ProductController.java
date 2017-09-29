@@ -40,6 +40,7 @@ public class ProductController implements Serializable{
     private String feedbackMessage;
     
     private String successMessage;
+    private String searchString;
     
     @Inject
     CustomerController customerController;
@@ -164,6 +165,13 @@ public class ProductController implements Serializable{
         return "product_change";
     }
     
+    public boolean filter(Product p) {
+        if(this.getSearchString() != null && !(this.getSearchString().equals(""))) {
+            return p.getName().contains(this.getSearchString());
+        }
+        else return true;
+    }
+    
     
 
     public Product getProduct() {
@@ -252,6 +260,14 @@ public class ProductController implements Serializable{
 
     public void setSuccessMessage(String successMessage) {
         this.successMessage = successMessage;
+    }
+
+    public String getSearchString() {
+        return searchString;
+    }
+
+    public void setSearchString(String searchString) {
+        this.searchString = searchString;
     }
 
     

@@ -8,17 +8,10 @@ package web;
 import ejb.CustomerBean;
 import entities.Customer;
 import java.io.Serializable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
-import javax.enterprise.inject.Produces;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -53,14 +46,14 @@ public class CustomerController implements Serializable {
     public CustomerController() {
     }
     
-    public void updateCustomer() {
+    public void updateCustomer() throws Exception {
         this.setCustomer(ejbFacade.loginCustomer(this.getCustomer().getEmail(), this.getCustomer().getPassword()));
     }
     
     /**
      * Register a new user
      */
-    public String register() {
+    public String register() throws Exception {
         boolean success = ejbFacade.RegisterNewCustomer(new Customer(
                 this.getName(),
                 this.getEmail(),
@@ -81,7 +74,7 @@ public class CustomerController implements Serializable {
     /**
      * Login the customer if the given credentials are valid
      */
-    public String login() {
+    public String login() throws Exception {
         Customer customer = ejbFacade.loginCustomer(this.getEmail(), this.getPassword());
         if(customer != null) {
             setErrorMessage(null);

@@ -91,6 +91,22 @@ General css
     color: green;
 }
 
+.search-field {
+    position: absolute;
+    left: 65%;
+    top: 12%;
+    width: 17%;
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.search-button {
+    position: absolute;
+    left: 82%;
+    top: 12%;
+    padding: 10px 15px;
+}
 
 
 
