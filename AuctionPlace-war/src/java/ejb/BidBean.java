@@ -6,9 +6,7 @@
 package ejb;
 
 import entities.Bid;
-import entities.Product;
 import javax.ejb.Stateless;
-import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -31,15 +29,11 @@ public class BidBean extends AbstractFacade<Bid> {
         return em;
     }
 
+    /**
+     * Update the bid inn the database
+     * @param b the bid to update
+     */
     public void updateBid(Bid b) {
         this.edit(b);
-    }
-    
-    public boolean register(Bid bid) {
-        // If bid is higher than current bid
-        super.create(bid);
-        return true;
-        
-        // notify Product?
     }
 }

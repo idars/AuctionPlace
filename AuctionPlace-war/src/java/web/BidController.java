@@ -6,7 +6,6 @@
 package web;
 
 import entities.Bid;
-import entities.Customer;
 import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -45,7 +44,7 @@ public class BidController implements Serializable {
     public BidController() {
         this.automaticBidding = false;
     }
-    
+    /*
     public boolean submit() {
         Customer customer = customerController.getCustomer();
         boolean success = ejbFacade.register(new Bid(
@@ -59,7 +58,11 @@ public class BidController implements Serializable {
             return false;
         }
     }
-    
+    */
+    /**
+     * Send in a new bid on the product if the bid is higher then current bid
+     * @return the page to navigate to
+     */
     public String sendBid() {
         Double currentAmount = productController.getProduct().getCurrentBid().getAmount();
         Double currentMax = productController.getProduct().getCurrentBid().getMaxAmount();
@@ -132,6 +135,7 @@ public class BidController implements Serializable {
         }
     }
     
+    
     public void validateBidValue(FacesContext context, UIComponent toValidate, Object value) {
         double input = (Double) value;
         // TODO get current bid from product, find its value
@@ -145,10 +149,16 @@ public class BidController implements Serializable {
         }
     }
     
+    /**
+     * Turn on or off automatic bidding
+     */
     public void toggleAutomaticBiddding() {
         this.setAutomaticBidding(!this.getAutomaticBidding());
     }
     
+    /**
+     * Clear all the bid input fields
+     */
     public void clearInputFields() {
         this.setAmount(null);
         this.setAutomaticBidding(false);

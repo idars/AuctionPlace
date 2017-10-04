@@ -33,12 +33,17 @@ public class CustomerBean extends AbstractFacade<Customer>{
         return em;
     }
     
+    /**
+     * check if user already exists and
+     * Encrypt password with MD5 which is weak but fast to implement
+     * @param customer the new customer to add
+     * @return true if the customer was successfully added
+     * @throws Exception if the encryption of the password failed
+     */
     public boolean RegisterNewCustomer(Customer customer) throws Exception {
 
-        // check if user exists
         if (getCustomerByEmail(customer.getEmail()) == null) {
             
-            // encrypt password with MD5 which is unsecure but fast to implement
             customer.setPassword(LoginHelper.encryptPassword(customer.getPassword()));
             
             super.create(customer);
@@ -48,6 +53,14 @@ public class CustomerBean extends AbstractFacade<Customer>{
         }
     }
     
+    /**
+     * Query the customer from the database and check if the given 
+     * password matches the stored password
+     * @param email the customers email
+     * @param password the customers password
+     * @return the customer
+     * @throws Exception if encryption of password failed
+     */
     public Customer loginCustomer(String email, String password) throws Exception {
         Customer customer = getCustomerByEmail(email);
         if(customer != null && customer.getPassword().equals(LoginHelper.encryptPassword(password))) {         
@@ -58,6 +71,11 @@ public class CustomerBean extends AbstractFacade<Customer>{
         }
     }
 
+    /**
+     * Query the customer from the database
+     * @param email the customers email
+     * @return the customer
+     */
     public Customer getCustomerByEmail(String email) {
         Query createNamedQuery = getEntityManager().createNamedQuery("Customer.findByEmail");
 
@@ -70,7 +88,10 @@ public class CustomerBean extends AbstractFacade<Customer>{
             return null;
         }
     }
-    
+    /**
+     * Update the customer inn the database
+     * @param customer
+     */
     public void editCustomer(Customer customer) {
         this.edit(customer);
     }

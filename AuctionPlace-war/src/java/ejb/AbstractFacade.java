@@ -11,6 +11,10 @@ import javax.persistence.EntityManager;
 /**
  *
  * @author Daniel Losvik
+ * 
+ * This class is the super class of all the enterprise java beans
+ * and defines the 4 crud methods plus the find all method used to
+ * store and query data from the database
  */
 
 

@@ -13,6 +13,12 @@ import java.security.MessageDigest;
  */
 public class LoginHelper {
     
+    /**
+     * Encrypt password with MD5 which is weak but fast to implement
+     * @param password the customers password
+     * @return the encrypted password
+     * @throws Exception if encryption failed
+     */
     public static String encryptPassword(String password) throws Exception {
 
         MessageDigest md = MessageDigest.getInstance("MD5");

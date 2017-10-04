@@ -11,7 +11,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
- *
+ * 
+ * @author Daniel Losvik
  */
 @Stateless
 public class FeedbackBean extends AbstractFacade<Feedback> {

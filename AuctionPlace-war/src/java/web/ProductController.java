@@ -58,15 +58,19 @@ public class ProductController implements Serializable{
         this.setProducts(this.ejbFacade.getProducts());
     }
     
+    /**
+     * Add a new product to the database
+     * @return the page to navigate to
+     */
     public String addProduct() {
         
-        // check Product Image
+        // check Product Image or set dafault
         String picture = "http://www.novelupdates.com/img/noimagefound.jpg";
         if(this.getPicture() != null && !(this.getPicture().equals(""))) {
             picture = this.getPicture();
         }
         
-        // check When bidding closes
+        // check When bidding closes and create a timestamp
         Timestamp time = new Timestamp(System.currentTimeMillis()
                 + this.getTimeLeftHours() * 3600000 
                 + this.getTimeLeftMinutes() * 60000);
@@ -82,6 +86,11 @@ public class ProductController implements Serializable{
                 Status.UNPUBLISHED,
                 customerController.getCustomer()
         ));
+        
+        // Add the starting bid to the new product and add the new product
+        // to the database and query all products again to update the view. 
+        // We do not need to add the bid to the database since the
+        // Product - Bid mapping is marked cascade.All.
         newProduct.setCurrentBid(startingBid);
         this.ejbFacade.addProduct(newProduct);
         customerController.getCustomer().getCatalog().add(newProduct);
@@ -89,6 +98,10 @@ public class ProductController implements Serializable{
         return "catalogue";
     }
     
+    /**
+     * Change status of product to published making it visible on the auction
+     * @param p the product to change status on
+     */
     public void publishProduct(Product p) {
         if(p.getStatus() == Status.UNPUBLISHED) {
             p.setStatus(Status.PUBLISHED);
@@ -100,10 +113,15 @@ public class ProductController implements Serializable{
         this.updateProducts();
     }
     
+    /**
+     * Check if the product is published
+     * @param p the product
+     * @return true if the product is published
+     */
     public boolean isPublished(Product p) {
         return p.getStatus() == Status.PUBLISHED;
     }
-    
+
     public boolean isUnPublished(Product p) {
         return p.getStatus() == Status.UNPUBLISHED;
     }
@@ -112,6 +130,12 @@ public class ProductController implements Serializable{
         return p.getStatus() == Status.SOLD;
     }
     
+    /**
+     * Check the time and update the product status to sold if time is out
+     * or give the time left in format (dd.hh.mm.ss)
+     * @param p the product
+     * @return a string with the time left or "SOLD"
+     */
     public String formatTimeLeft(Product p) {
         Long millis = p.getWhenBiddingCloses().getTime() - System.currentTimeMillis();
         
@@ -134,6 +158,9 @@ public class ProductController implements Serializable{
         }
     }
     
+    /**
+     * Add a feedback to the current product the customer is looking on
+     */
     public void sendFeedback() {
         Feedback f = new Feedback(this.getFeedbackMessage(), customerController.getCustomer());
         this.getProduct().setRating(this.getRatings());
@@ -142,11 +169,20 @@ public class ProductController implements Serializable{
         this.updateProducts();
     }
     
+    /**
+     * Navigate to the feedback side
+     * @param p the product
+     * @return the side
+     */
     public String seeFeedback(Product p) {
         this.setProduct(p);
         return "product_details";
     }
     
+    /**
+     * Set the input fields to match the current product info 
+     * @param p the product to edit
+     */
     public void editProduct(Product p) {
         this.setProduct(p);
         this.setName(p.getName());
@@ -155,6 +191,11 @@ public class ProductController implements Serializable{
         this.setSuccessMessage(null);
     }
     
+    /**
+     * Save the changes of the product to the database
+     * and query all products again to update the view
+     * @return the same page to refresh page
+     */
     public String saveChanges() {
         this.getProduct().setName(this.getName());
         this.getProduct().setFeatures(this.getFeatures());
@@ -165,6 +206,11 @@ public class ProductController implements Serializable{
         return "product_change";
     }
     
+    /**
+     * Check if product matches the search string to filter products
+     * @param p the product to check
+     * @return true if product match
+     */
     public boolean filter(Product p) {
         if(this.getSearchString() != null && !(this.getSearchString().equals(""))) {
             return p.getName().contains(this.getSearchString());
@@ -173,7 +219,6 @@ public class ProductController implements Serializable{
     }
     
     
-
     public Product getProduct() {
         return product;
     }

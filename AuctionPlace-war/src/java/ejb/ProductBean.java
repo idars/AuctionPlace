@@ -5,7 +5,6 @@
  */
 package ejb;
 
-import entities.Bid;
 import java.util.List;
 import entities.Product;
 import javax.ejb.Stateless;
@@ -31,14 +30,26 @@ public class ProductBean extends AbstractFacade<Product>{
         return em;
     }
     
+    /**
+     * Query all the products in the database
+     * @return a list of the products
+     */
     public List<Product> getProducts() {
         return this.findAll();
     }
     
+    /**
+     * Add a new product to the database
+     * @param product the new products to add
+     */
     public void addProduct(Product product) {
         super.create(product);
     }
     
+    /**
+     * Update the product in the database
+     * @param p the product to update
+     */
     public void updateProduct(Product p) {
         this.edit(p);
     }

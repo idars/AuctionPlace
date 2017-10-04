@@ -46,12 +46,18 @@ public class CustomerController implements Serializable {
     public CustomerController() {
     }
     
+    /**
+     * Query the customer again after data is updated in the database
+     * @throws Exception if encryption of password failed
+     */
     public void updateCustomer() throws Exception {
         this.setCustomer(ejbFacade.loginCustomer(this.getCustomer().getEmail(), this.getCustomer().getPassword()));
     }
     
     /**
-     * Register a new user
+     * Register new customer or set error message if input is wrong
+     * @return the side to navigate to
+     * @throws Exception if encryption of password failed
      */
     public String register() throws Exception {
         boolean success = ejbFacade.RegisterNewCustomer(new Customer(
@@ -72,7 +78,9 @@ public class CustomerController implements Serializable {
     }
     
     /**
-     * Login the customer if the given credentials are valid
+     * Login the customer if he exists and the password matches
+     * @return the page to navigate to
+     * @throws Exception if encryption of password failed
      */
     public String login() throws Exception {
         Customer customer = ejbFacade.loginCustomer(this.getEmail(), this.getPassword());
@@ -94,14 +102,26 @@ public class CustomerController implements Serializable {
         }
     }
     
+    /**
+     * Logout the customer
+     */
     public void logout() {
         setCustomer(null);
     }
     
+    /**
+     * Check if the customer is logged in
+     * @return true if the customer is logged inn
+     */
     public boolean isLogged() {
         return (getCustomer() != null);
     }
     
+    /**
+     * Check if the user is logged inn before navigating
+     * @param page the page to navigate to
+     * @return the page to navigate to
+     */
     public String navigateIfLogged(String page) {
         if(this.isLogged()) {
             bidController.clearInputFields();
@@ -115,12 +135,20 @@ public class CustomerController implements Serializable {
         }
     }
     
+    /**
+     * Clear all customer input fields
+     */
     public void clearInputFields() {
         this.setName(this.getCustomer().getName());
         this.setPhone(this.getCustomer().getPhone());
         this.setSuccessMessage(null);
     }
     
+    /**
+     * Save changes to the customer in the database and
+     * query all products again to update the view
+     * @return the side to navigate to
+     */
     public String saveChanges() {
         this.getCustomer().setName(this.getName());
         this.getCustomer().setPhone(this.getPhone());
