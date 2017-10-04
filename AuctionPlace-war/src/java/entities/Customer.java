@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package entities;
 
 import java.io.Serializable;
@@ -21,7 +16,12 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
+ * An entity representing a Customer.
  * 
+ * A Customer can be both a seller and a bidder. As such, this class can 
+ * perform both selling- and bidding-specific operations. Each Customer is able
+ * to auction products, display them in their catalog, and to bid on other
+ * auctions. Note that a Customer can not bid on his own products.
  */
 @Entity
 @Table(name = "CUSTOMER")
@@ -51,6 +51,9 @@ public class Customer implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "author")
     private List<Feedback> feedbacks;
     
+    /**
+     * Constructs an empty Customer object.
+     */
     public Customer() {
         name = "";
         email = "";
@@ -62,6 +65,19 @@ public class Customer implements Serializable {
         feedbacks = new ArrayList<>();
     }
     
+    /**
+     * Constructs a Customer object with the specified information.
+     * 
+     * Each parameter must consist of at least 2 characters, unless otherwise 
+     * stated.
+     * 
+     * @param name the name of the Customer
+     * @param email the mail address, fulfilling the regex 
+     * @param password the hash result of the Customer's password
+     * @param phone the phone number, including country codes
+     * @param rating the Customers rating, which can be a value between 1.0 and 
+     * 5.0
+     */
     public Customer(
             String name, 
             String email, 
@@ -86,73 +102,43 @@ public class Customer implements Serializable {
         this.id = id;
     }
 
-    /**
-     * @return the name
-     */
     public String getName() {
         return name;
     }
 
-    /**
-     * @param name the name to set
-     */
     public void setName(String name) {
         this.name = name;
     }
 
-    /**
-     * @return the email
-     */
     public String getEmail() {
         return email;
     }
 
-    /**
-     * @param email the email to set
-     */
     public void setEmail(String email) {
         this.email = email;
     }
 
-    /**
-     * @return the password
-     */
     @XmlTransient
     public String getPassword() {
         return password;
     }
 
-    /**
-     * @param password the password to set
-     */
     public void setPassword(String password) {
         this.password = password;
     }
 
-    /**
-     * @return the phone
-     */
     public String getPhone() {
         return phone;
     }
 
-    /**
-     * @param phone the phone to set
-     */
     public void setPhone(String phone) {
         this.phone = phone;
     }
 
-    /**
-     * @return the rating
-     */
     public Double getRating() {
         return rating;
     }
 
-    /**
-     * @param rating the rating to be set
-     */
     public void setRating(Double rating) {
         this.rating = rating;
     }
@@ -190,7 +176,6 @@ public class Customer implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Customer)) {
             return false;
         }

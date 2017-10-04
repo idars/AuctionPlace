@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package entities;
 
 import java.io.Serializable;
@@ -15,8 +10,19 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 /**
- *
- * @author Ben
+ * An entity representing a bid. 
+ * 
+ * A bid can be placed on products with a status of PUBLISHED. It may be placed
+ * in two ways:
+ * 
+ * <ul>
+ * <li>As a one-time bid, where only amount is specified.</li>
+ * <li>As a recurrent bid (so-called automatic bidding), where maxAmount is also
+ * specified.</li>
+ * </ul>
+ * 
+ * When placing a recurrent bid,  Bids with increasing amount will be placed 
+ * until maxAmount is reached or the auction is won.
  */
 @Entity
 public class Bid implements Serializable {
@@ -34,6 +40,9 @@ public class Bid implements Serializable {
     @JoinColumn(name = "BIDDER_ID", referencedColumnName = "ID")
     private Customer bidder;
 
+    /**
+     * Constructs an empty Bid object.
+     */
     public Bid() {
         this.amount = null;
         this.maxAmount = null;
@@ -41,6 +50,14 @@ public class Bid implements Serializable {
         this.bidder = null;
     }
 
+    /**
+     * Constructs a Bid object with the specified information.
+     * 
+     * @param amount the value to bid
+     * @param maxAmount the maximum value limit, if recurring
+     * @param automaticBidding true if the bid should be recurring, false otherwise
+     * @param bidder the Customer to place the bid
+     */
     public Bid(Double amount, Double maxAmount, Boolean automaticBidding, Customer bidder) {
         this.amount = amount;
         this.maxAmount = maxAmount;
@@ -97,7 +114,6 @@ public class Bid implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Bid)) {
             return false;
         }

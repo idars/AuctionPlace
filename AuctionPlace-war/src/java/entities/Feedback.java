@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package entities;
 
 import java.io.Serializable;
@@ -13,11 +8,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 
 /**
- *
- * @author Ben
+ * An entity representing a Feedback.
+ * 
+ * A feedback is a comment that can be submitted to a product. Once a Customer 
+ * has won an auction, the Customer can choose to write a Feedback to the 
+ * received product. The language is always assumed to be English.
  */
 @Entity
 public class Feedback implements Serializable {
@@ -33,17 +30,24 @@ public class Feedback implements Serializable {
     @JoinColumn(name = "AUTHOR_ID", referencedColumnName = "ID")
     private Customer author;
 
+    /**
+     * Constructs an empty Feedback object.
+     */
     public Feedback() {
-        this.id = null;
         this.comment = null;
         this.author = null;
     }
     
+    /**
+     * Constructs a Feedback object with the specified information.
+     * 
+     * @param comment the text comment
+     * @param author the Customer writing the Feedback
+     */
     public Feedback(String comment, Customer author) {
         this.comment = comment;
         this.author = author;
     }
-    
     
     public Long getId() {
         return id;

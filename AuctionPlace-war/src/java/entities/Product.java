@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package entities;
 
 import java.io.Serializable;
@@ -20,8 +15,18 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- *
- * @author Ben
+ * An entity representing a Product.
+ * 
+ * A product is a valuable item that can be auctioned. Each product is assigned 
+ * an auction, which means that there is no need to create a new auction when 
+ * creating a Product.
+ * 
+ * The owning Customer can auction a product, and other Customers can bid on it 
+ * once it's published. Each product has a deadline (which can be postponed), 
+ * and once the deadline has been reached, the Customer with the highest bid 
+ * wins the acution.
+ * 
+ * Note that the rating has no relation to the rating of a Customer.
  */
 @Entity
 public class Product implements Serializable {
@@ -31,6 +36,16 @@ public class Product implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
+    /**
+     * The current status of the product. The values follow the different 
+     * lifecycle phases that an auction can have:
+     * 
+     * <ul>
+     * <li>UNPUBLISHED: Auction is not active</li>
+     * <li>PUBLISHED: Auction is active</li>
+     * <li>SOLD: Auction has finished</li>
+     * </ul>
+     */
     public enum Status {
         UNPUBLISHED, PUBLISHED, SOLD
     }
@@ -56,6 +71,9 @@ public class Product implements Serializable {
     @JoinColumn(name = "OWNER_ID", referencedColumnName = "ID")
     private Customer owner;
 
+    /**
+     * Constructs an empty Product object.
+     */
     public Product() {
         this.name = "";
         this.picture = "";
@@ -66,6 +84,17 @@ public class Product implements Serializable {
         this.owner = null;
     }
 
+    /**
+     * Constructs a Product object with the specified information.
+     * 
+     * @param name the name of the product
+     * @param picture an absolute URL of an HTML-supported image
+     * @param features a comment describing the product's features
+     * @param rating the rating of the product
+     * @param whenBiddingCloses the deadline indicating when the auction ends
+     * @param status the status of the product
+     * @param owner the Customer auctioning this product
+     */
     public Product(String name, String picture, String features, int rating, Date whenBiddingCloses, Status status, Customer owner) {
         this.name = name;
         this.picture = picture;
