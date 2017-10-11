@@ -42,8 +42,8 @@ and open the template in the editor.
           <th>Picture</th>
           <th>Name</th>
           <th>Time left (dd:hh:mm:ss)</th>
-          <th>Current bid</th>
-          <th>Bidder</th>
+          <th>Highest bid</th>
+          <th>Highest bidder</th>
           <th>Status</th>
           <th width="230"></th>
        </tr>
@@ -67,11 +67,14 @@ and open the template in the editor.
                 </c:if>
                 <td>${productController.formatTimeLeft(product)}</td>
                 <td>${product.currentBid.amount}</td>
-                <c:if test = "${product.currentBid.bidder.email == customerController.customer.email}">
+                <c:if test = "${product.currentBid.bidder.email == customerController.customer.email and !(product.currentBid.bidder.email == product.owner.email)}">
                     <td style="color: green">${product.currentBid.bidder.name}</td>
                 </c:if>
                 <c:if test = "${product.currentBid.bidder.email != customerController.customer.email}">
                     <td>${product.currentBid.bidder.name}</td>
+                </c:if>
+                <c:if test = "${product.currentBid.bidder.email == product.owner.email}">
+                    <td>No bids</td>
                 </c:if>
                 <td>${product.status}</td>
                 <c:if test = "${productController.isUnPublished(product)}">
