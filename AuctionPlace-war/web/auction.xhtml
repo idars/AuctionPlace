@@ -57,14 +57,11 @@ and open the template in the editor.
                         </h:commandLink></td></h:form>
                 <td>${productController.formatTimeLeft(product)}</td>
                 <td>${product.currentBid.amount}</td>
-               <c:if test = "${product.currentBid.bidder.email == customerController.customer.email and !(product.currentBid.bidder.email == product.owner.email)}">
+               <c:if test = "${product.currentBid.bidder.email == customerController.customer.emai}">
                     <td style="color: green">${product.currentBid.bidder.name}</td>
                 </c:if>
-                <c:if test = "${product.currentBid.bidder.email != customerController.customer.email and !(product.currentBid.bidder.email == product.owner.email)}}">
+                <c:if test = "${product.currentBid.bidder.email != customerController.customer.email}">
                     <td>${product.currentBid.bidder.name}</td>
-                </c:if>
-                <c:if test = "${product.currentBid.bidder.email == product.owner.email}">
-                    <td>No bids</td>
                 </c:if>
                 
                 <h:form><td>
