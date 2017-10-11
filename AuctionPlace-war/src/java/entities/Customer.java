@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * A Customer can be both a seller and a bidder. As such, this class can 
  * perform both selling- and bidding-specific operations. Each Customer is able
  * to auction products, display them in their catalog, and to bid on other
- * auctions. Note that a Customer can not bid on his own products.
+ * auctions.
  */
 @Entity
 @Table(name = "CUSTOMER")

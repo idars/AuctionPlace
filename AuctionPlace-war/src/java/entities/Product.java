@@ -43,7 +43,7 @@ public class Product implements Serializable {
      * <ul>
      * <li>UNPUBLISHED: Auction is not active</li>
      * <li>PUBLISHED: Auction is active</li>
-     * <li>SOLD: Auction has finished</li>
+     * <li>SOLD: Auction is finished</li>
      * </ul>
      */
     public enum Status {
