@@ -1,7 +1,6 @@
 package entities;
 
 import java.io.Serializable;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,6 +22,8 @@ import javax.persistence.ManyToOne;
  * 
  * When placing a recurrent bid,  Bids with increasing amount will be placed 
  * until maxAmount is reached or the auction is won.
+ * 
+ * @see {@link entities.Product#Status}
  */
 @Entity
 public class Bid implements Serializable {
