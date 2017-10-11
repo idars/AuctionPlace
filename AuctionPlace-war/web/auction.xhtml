@@ -57,7 +57,7 @@ and open the template in the editor.
                         </h:commandLink></td></h:form>
                 <td>${productController.formatTimeLeft(product)}</td>
                 <td>${product.currentBid.amount}</td>
-               <c:if test = "${product.currentBid.bidder.email == customerController.customer.emai}">
+               <c:if test = "${product.currentBid.bidder.email == customerController.customer.email}">
                     <td style="color: green">${product.currentBid.bidder.name}</td>
                 </c:if>
                 <c:if test = "${product.currentBid.bidder.email != customerController.customer.email}">

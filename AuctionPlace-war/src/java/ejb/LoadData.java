@@ -45,12 +45,14 @@ public class LoadData {
                 "A car", 0, timeleft2 , Status.PUBLISHED, user2);
         
         Bid startingBid = new Bid(20.0, 0.0, false, user);
-        Bid startingBid2 = new Bid(50.0, 0.0, false, user2);
+        Bid startingBid2 = new Bid(35.0, 0.0, false, user);
+        Bid startingBid3 = new Bid(15.0, 0.0, false, user2);
+        Bid startingBid4 = new Bid(5.0, 0.0, false, user2);
         
         product1.setCurrentBid(startingBid);
-        product2.setCurrentBid(startingBid);
-        product3.setCurrentBid(startingBid2);
-        product4.setCurrentBid(startingBid2);
+        product2.setCurrentBid(startingBid2);
+        product3.setCurrentBid(startingBid3);
+        product4.setCurrentBid(startingBid4);
         
         em.persist(user);
         em.persist(user2);
