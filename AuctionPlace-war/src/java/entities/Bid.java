@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * An entity representing a bid. 
@@ -26,6 +27,7 @@ import javax.persistence.ManyToOne;
  * @see {@link entities.Product#Status}
  */
 @Entity
+@XmlRootElement
 public class Bid implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * An entity representing a Product.
@@ -29,6 +30,7 @@ import javax.persistence.TemporalType;
  * Note that the rating has no relation to the rating of a Customer.
  */
 @Entity
+@XmlRootElement
 public class Product implements Serializable {
 
     private static final long serialVersionUID = 4L;

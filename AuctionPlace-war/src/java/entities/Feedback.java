@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * An entity representing a Feedback.
@@ -17,6 +18,7 @@ import javax.persistence.ManyToOne;
  * received product. The language is always assumed to be English.
  */
 @Entity
+@XmlRootElement
 public class Feedback implements Serializable {
 
     private static final long serialVersionUID = 3L;
