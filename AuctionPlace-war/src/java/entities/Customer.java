@@ -43,12 +43,15 @@ public class Customer implements Serializable {
     private Double rating;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner") // maps to the "owner" member field of Product
+    @XmlTransient
     private List<Product> catalog;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "bidder")
+    @XmlTransient
     private List<Bid> bids;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "author")
+    @XmlTransient
     private List<Feedback> feedbacks;
     
     /**

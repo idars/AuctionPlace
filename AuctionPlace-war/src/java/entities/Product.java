@@ -14,6 +14,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * An entity representing a Product.
@@ -63,14 +64,17 @@ public class Product implements Serializable {
     
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "FEEDBACK_ID", referencedColumnName = "ID")
+    @XmlTransient
     private Feedback feedback;
     
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "BID_ID", referencedColumnName = "ID")
+    @XmlTransient
     private Bid currentBid;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "OWNER_ID", referencedColumnName = "ID")
+    @XmlTransient
     private Customer owner;
 
     /**

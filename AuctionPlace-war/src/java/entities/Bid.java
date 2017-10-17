@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * An entity representing a bid. 
@@ -41,6 +42,7 @@ public class Bid implements Serializable {
     
     @ManyToOne
     @JoinColumn(name = "BIDDER_ID", referencedColumnName = "ID")
+    @XmlTransient
     private Customer bidder;
 
     /**
