@@ -1,10 +1,17 @@
 package ejb;
 
+import entities.Customer;
 import java.util.List;
 import entities.Product;
+import javax.annotation.Resource;
+import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
+import javax.jms.JMSContext;
+import javax.jms.Topic;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import web.CustomerController;
 
 /**
  *
@@ -15,6 +22,16 @@ public class ProductBean extends AbstractFacade<Product>{
 
     @PersistenceContext(unitName="AuctionPlace-warPU")
     private EntityManager em;
+    
+    @Resource
+    private SessionContext sc;
+    @Resource(lookup = "java:app/BidWinnerTopic")
+    private Topic topic;
+    @Inject
+    private JMSContext context;
+    
+    @Inject
+    CustomerController customerController;
     
     public ProductBean() {
         super(Product.class);
@@ -47,5 +64,15 @@ public class ProductBean extends AbstractFacade<Product>{
      */
     public void updateProduct(Product p) {
         this.edit(p);
+    }
+    
+    public void sendMessageToWinner(Product p, Customer c) {
+        if (c != null && p.getCurrentBid().getBidder().getEmail().equals(c.getEmail())) {
+            this.context.createProducer().send(topic,
+                    "Dear " + c.getName() + ",\n"
+                    + "Congratulations! You have won in bidding for " + p.getName() + "\n"
+                    + "You can access the product using the following link:\n"
+                    + "URL = http://localhost:8080/AuctionPlace-war/product_details.xhtml?product=" + p.getId() + "\n");
+        }
     }
 }

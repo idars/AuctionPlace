@@ -36,6 +36,7 @@ public class ProductController implements Serializable{
     
     private String successMessage;
     private String searchString;
+    private String param;
     
     @Inject
     CustomerController customerController;
@@ -142,6 +143,7 @@ public class ProductController implements Serializable{
         if(millis < 0) {
             if(this.isSold(p) == false) {
                 p.setStatus(Status.SOLD);
+                this.ejbFacade.sendMessageToWinner(p, this.customerController.getCustomer());
                 this.ejbFacade.updateProduct(p);
                 this.updateProducts();
                 
@@ -211,6 +213,13 @@ public class ProductController implements Serializable{
             return p.getName().contains(this.getSearchString());
         }
         else return true;
+    }
+    
+    public void processParam() {
+        if(this.getParam() != null) {
+            this.setProduct(this.ejbFacade.find(Long.parseLong(this.getParam())));
+            this.setParam(null);
+        }
     }
     
     
@@ -310,6 +319,14 @@ public class ProductController implements Serializable{
         this.searchString = searchString;
     }
 
+    public String getParam() {
+        return param;
+    }
+
+    public void setParam(String param) {
+        this.param = param;
+    }
+    
     
     
     
