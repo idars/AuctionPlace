@@ -46,7 +46,7 @@ and open the template in the editor.
           <th width="230"></th>
        </tr>
             
-            <c:forEach items="${productController.products}" var="product">
+            <c:forEach items="${productController.products}" var="product" varStatus="loop">
                 <c:if test="${productController.isPublished(product) 
                               and productController.filter(product)}">
             <tr>
