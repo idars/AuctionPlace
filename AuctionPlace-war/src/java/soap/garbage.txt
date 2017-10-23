@@ -1,0 +1,50 @@
+    /**
+     * Place a bid on a product
+     * @param newBid the Bid a Customer makes on a Product
+     */
+    @WebMethod(operationName = "bidForAuction")
+    public Message bidForAuction(Bid newBid) {
+        bidbean.create(newBid);
+        
+        SetBidStatus status = new SetBidStatus();
+        
+        status.setCode(200);
+        
+       /* ConnectionFactory static factory;
+        Connection connection = null; 
+        connection = factory.createConnection(); 
+        Session session = null; 
+        session = connection.createSession(false, Session.AUTO_KNOWLEDGE);
+        
+        Message message = session.createObjectMessage(status);   
+        */
+       try {   //Create and start connection  
+            InitialContext context = new InitialContext();  
+            QueueConnectionFactory factory =(QueueConnectionFactory)context.lookup("myQueueConnectionFactory");  
+            QueueConnection connection = factory.createQueueConnection();  
+            connection.start();  
+
+            //2) create queue session  
+            QueueSession session = connection.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);  
+
+            //3) get the Queue object  
+            Queue t=(Queue)context.lookup("myQueue");  
+
+            //4)create QueueSender object         
+            QueueSender sender=session.createSender(t);  
+
+            //5) create TextMessage object  
+            TextMessage message=session.createTextMessage();
+            
+            message.setText(status.getExplanation());
+            sender.send(message);
+            
+            //8) connection close  
+            connection.close();  
+        }
+       catch(Exception e){
+           System.out.println(e);
+           return null;
+       }  
+       return null;
+    }  

@@ -7,17 +7,17 @@ package soap;
 
 import ejb.ProductBean;
 import ejb.BidBean;
+import ejb.CustomerBean;
 import entities.Bid;
+import entities.Customer;
 import entities.Product;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
-import javax.jws.WebParam;
 import javax.ejb.Stateless;
 import entities.Product.Status;
 import java.util.ArrayList;
-import javax.jms.Message;
 
 /**
  *
@@ -33,6 +33,10 @@ public class AuctionWS {
     
     @EJB
     private BidBean bidbean;
+    
+    @EJB
+    private CustomerBean customerbean;
+    
        /**
      * Get a list of active auctions
      * @return  a list of products which are available on auction now
@@ -50,14 +54,37 @@ public class AuctionWS {
     }
 
     /**
-     * Place a bid on a product
-     * @param newBid the Bid a Customer makes on a Product
+     * The webservice creates a bid for a customer (bidder) on a product
+     * @param amount
+     * @param customerid
+     * @param productid
+     * @return 
      */
     @WebMethod(operationName = "bidForAuction")
-    public Message bidForAuction(Bid newBid) {
-        bidbean.create(newBid);
-        //Message message = new Message();
-        return null;
+    public SetBidStatus bidForAuction(double amount, long customerid, long productid) {
+ 
+        Customer customer = customerbean.find(customerid);
+ 
+        Bid newBid = new Bid();
+        newBid.setBidder(customer);
+        newBid.setAmount(amount);
+        
+        Product product = productbean.find(productid);
+         
+        SetBidStatus status = new SetBidStatus();
+        try { 
+            // TODO: If one call succeeds, but the other fails, we have an incosistent database
+            // TODO: The methods do no checks on wether this succeeds, valid datas or whatever
+            product.setCurrentBid(newBid);
+            bidbean.create(newBid);   
+
+            status.setCode(200);
+            return status;
+        }
+        catch (Exception e) {
+            status.setCode(500);
+            return status;
+        }
     }
 
 }
