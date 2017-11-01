@@ -29,9 +29,9 @@ import javax.jms.MessageListener;
     @ActivationConfigProperty(
             propertyName = "destinationLookup", 
             propertyValue = "java:app/BidWinnerTopic"),
-    @ActivationConfigProperty(
-            propertyName = "subscriptionDurability", 
-            propertyValue = "Durable"),
+    //@ActivationConfigProperty(
+      //      propertyName = "subscriptionDurability", 
+        //    propertyValue = "Durable"),
     @ActivationConfigProperty(
             propertyName = "subscriptionName", 
             propertyValue = "java:app/BidWinnerTopic"),

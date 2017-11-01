@@ -31,11 +31,12 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Customer implements Serializable {
 
     private static final long serialVersionUID = 2L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    //@Id
+    //@GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
     @Column(nullable = false)
+    @Id
     private String email;
     @Column(nullable = false)
     private String password;

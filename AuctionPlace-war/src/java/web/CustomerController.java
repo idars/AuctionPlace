@@ -3,15 +3,20 @@ package web;
 import ejb.CustomerBean;
 import entities.Customer;
 import java.io.Serializable;
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  *
  * @author Daniel Losvik
  */
+@DeclareRoles({"user"})
 @Named(value = "customerController")
 @SessionScoped
 public class CustomerController implements Serializable {
@@ -78,6 +83,11 @@ public class CustomerController implements Serializable {
      * @throws Exception if encryption of password failed
      */
     public String login() throws Exception {
+        
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest)context.getExternalContext().getRequest();
+        request.login(this.getEmail() , this.getPassword());
+        
         Customer customer = ejbFacade.loginCustomer(this.getEmail(), this.getPassword());
         if(customer != null) {
             setErrorMessage(null);
@@ -117,6 +127,7 @@ public class CustomerController implements Serializable {
      * @param page the page to navigate to
      * @return the page to navigate to
      */
+    @RolesAllowed("user")
     public String navigateIfLogged(String page) {
         if(this.isLogged()) {
             bidController.clearInputFields();
@@ -144,6 +155,7 @@ public class CustomerController implements Serializable {
      * query all products again to update the view
      * @return the side to navigate to
      */
+    @RolesAllowed("user")
     public String saveChanges() {
         this.getCustomer().setName(this.getName());
         this.getCustomer().setPhone(this.getPhone());
