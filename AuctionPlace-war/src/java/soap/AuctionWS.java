@@ -23,7 +23,7 @@ import java.util.ArrayList;
  *
  * @author Ben
  */
-@WebService(serviceName = "AuctionWS")
+@WebService(serviceName = "AuctionWS", targetNamespace = "http://localhost:8080/AuctionWS/")
 @Stateless()
 public class AuctionWS {
     
