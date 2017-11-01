@@ -20,13 +20,34 @@
     <security-constraint>
         <display-name>Constraint1</display-name>
         <web-resource-collection>
-            <web-resource-name>hei</web-resource-name>
+            <web-resource-name>secure_constraint</web-resource-name>
             <description/>
-            <url-pattern>/*</url-pattern>
+            <url-pattern>/add_product.xhtml</url-pattern>
+            <url-pattern>/catalogue.xhtml</url-pattern>
+            <url-pattern>/control_panel.xhtml</url-pattern>
+            <url-pattern>/place_bid.xhtml</url-pattern>
+            <url-pattern>/product_details.xhtml</url-pattern>
+            <url-pattern>/user_profile.xhtml</url-pattern>
         </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>user</role-name>
+        </auth-constraint>
         <user-data-constraint>
             <description/>
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
         </user-data-constraint>
     </security-constraint>
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <realm-name>jdbcRealm</realm-name>
+        <form-login-config>
+            <form-login-page>/login.xhtml</form-login-page>
+            <form-error-page>/login.xhtml</form-error-page>
+        </form-login-config>
+    </login-config>
+    <security-role>
+        <description/>
+        <role-name>user</role-name>
+    </security-role>
 </web-app>

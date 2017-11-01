@@ -2,6 +2,8 @@ package web;
 
 import entities.Bid;
 import java.io.Serializable;
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
@@ -13,6 +15,7 @@ import javax.inject.Inject;
 /**
  *
  */
+@DeclareRoles({"user"})
 @Named(value = "bidController")
 @SessionScoped
 public class BidController implements Serializable {
@@ -57,6 +60,7 @@ public class BidController implements Serializable {
      * Send in a new bid on the product if the bid is higher then current bid
      * @return the page to navigate to
      */
+    @RolesAllowed("user")
     public String sendBid() {
         Double currentAmount = productController.getProduct().getCurrentBid().getAmount();
         Double currentMax = productController.getProduct().getCurrentBid().getMaxAmount();

@@ -39,7 +39,7 @@ public class CustomerBean extends AbstractFacade<Customer>{
 
         if (getCustomerByEmail(customer.getEmail()) == null) {
             
-            customer.setPassword(LoginHelper.encryptPassword(customer.getPassword()));
+            //customer.setPassword(LoginHelper.encryptPassword(customer.getPassword()));
             
             super.create(customer);
             return true;
@@ -58,7 +58,7 @@ public class CustomerBean extends AbstractFacade<Customer>{
      */
     public Customer loginCustomer(String email, String password) throws Exception {
         Customer customer = getCustomerByEmail(email);
-        if(customer != null && customer.getPassword().equals(LoginHelper.encryptPassword(password))) {         
+        if(customer != null && customer.getPassword().equals((password))) {         
             return customer;
         }
         else {

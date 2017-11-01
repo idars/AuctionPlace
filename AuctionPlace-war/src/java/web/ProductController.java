@@ -13,11 +13,14 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.sql.Timestamp;
 import java.util.concurrent.TimeUnit;
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.RolesAllowed;
 
 /**
  *
  * @author Daniel Losvik
  */
+@DeclareRoles({"user"})
 @Named(value = "productController")
 @SessionScoped
 public class ProductController implements Serializable{
@@ -58,6 +61,7 @@ public class ProductController implements Serializable{
      * Add a new product to the database
      * @return the page to navigate to
      */
+    @RolesAllowed("user")
     public String addProduct() {
         
         // check Product Image or set dafault
@@ -98,6 +102,7 @@ public class ProductController implements Serializable{
      * Change status of product to published making it visible on the auction
      * @param p the product to change status on
      */
+    @RolesAllowed("user")
     public void publishProduct(Product p) {
         if(p.getStatus() == Status.UNPUBLISHED) {
             p.setStatus(Status.PUBLISHED);
@@ -158,6 +163,7 @@ public class ProductController implements Serializable{
     /**
      * Add a feedback to the current product the customer is looking on
      */
+    @RolesAllowed("user")
     public void sendFeedback() {
         Feedback f = new Feedback(this.getFeedbackMessage(), customerController.getCustomer());
         this.getProduct().setRating(this.getRatings());
@@ -171,6 +177,7 @@ public class ProductController implements Serializable{
      * @param p the product
      * @return the side
      */
+    @RolesAllowed("user")
     public String seeFeedback(Product p) {
         this.setProduct(p);
         return "product_details";
@@ -180,6 +187,7 @@ public class ProductController implements Serializable{
      * Set the input fields to match the current product info 
      * @param p the product to edit
      */
+    @RolesAllowed("user")
     public void editProduct(Product p) {
         this.setProduct(p);
         this.setName(p.getName());
@@ -193,6 +201,7 @@ public class ProductController implements Serializable{
      * and query all products again to update the view
      * @return the same page to refresh page
      */
+    @RolesAllowed("user")
     public String saveChanges() {
         this.getProduct().setName(this.getName());
         this.getProduct().setFeatures(this.getFeatures());

@@ -20,7 +20,8 @@ and open the template in the editor.
     <h:body>
         <ui:include src="navbar.xhtml"><ui:param name="active" value="login" /></ui:include>
         <h1 class="title">Login</h1>
-        <h:messages style="color:red"></h:messages>
+        <h:outputText value="(User in the jdbcRealm: kari@gmail.com : 12345678)"></h:outputText>
+        <h:messages style="color:red"></h:messages><br/><br/>
         <c:if test = "${customerController.errorMessage != null}">
             <h:outputLabel value="#{customerController.errorMessage}" styleClass="errorMessage"/>
             <br/><br/>
