@@ -75,4 +75,8 @@ public class ProductBean extends AbstractFacade<Product>{
                     + "URL = http://localhost:8080/AuctionPlace-war/product_details.xhtml?product=" + p.getId() + "\n");
         }
     }
+    
+    public void sendMessageToAll(Product p, Customer c) {
+        this.context.createProducer().send(topic, p.getName() + " has been bought by " + c.getName());
+    }
 }

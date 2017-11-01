@@ -72,6 +72,9 @@ public class AuctionWS {
         Product product = productbean.find(productid);
          
         SetBidStatus status = new SetBidStatus();
+        status.setCustomer(customer);
+        status.setProduct(product);
+        
         try { 
             // TODO: If one call succeeds, but the other fails, we have an incosistent database
             // TODO: The methods do no checks on wether this succeeds, valid datas or whatever

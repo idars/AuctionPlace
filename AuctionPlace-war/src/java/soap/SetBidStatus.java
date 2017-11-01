@@ -5,6 +5,9 @@
  */
 package soap;
 
+import entities.Customer;
+import entities.Product;
+
 
 /**
  *
@@ -14,29 +17,46 @@ public class SetBidStatus {
     
     
     private Integer code;
-    private String explanation;
+    private Customer customer;
+    private Product product;
     
     public SetBidStatus() {
-        code=0;
-        explanation = "";
+        this.code=0;
+        this.customer = null;
+        this.product = null;
     }
     
     public void setCode(Integer code) {
         this.code = code;
-        if (code == 200) this.explanation = "Customer X’s bid has been successfully placed for product Y";
-        else this.setExplanation("The bid for product Y has not been placed for customer X");
     }
     
-    public void setExplanation(String explanation) {
-        this.explanation = explanation;
+    
+    
+    public void setCustomer(Customer customer){
+        this.customer = customer;
+    }
+    public void setProduct(Product product) {
+        this.product = product;
     }
     
+    public Customer getCustomer() {
+        return this.customer;
+    }
+    
+    public Product getProduct() {
+        return this.product;
+    }
     
     public Integer getCode() {
         return this.code;
     }
     
-    public String getExplanation() {
-        return this.explanation;
+ 
+    @Override
+    public String toString() {
+         if (code == 200) 
+             return this.customer.getName() + "’s bid has been successfully placed for " + this.product.getName();
+        else 
+             return "The bid for " + this.product.getName() + " has not been placed for " + this.product.getName();
     }
 }

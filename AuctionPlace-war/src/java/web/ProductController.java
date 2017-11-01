@@ -144,6 +144,7 @@ public class ProductController implements Serializable{
             if(this.isSold(p) == false) {
                 p.setStatus(Status.SOLD);
                 this.ejbFacade.sendMessageToWinner(p, this.customerController.getCustomer());
+                this.ejbFacade.sendMessageToAll(p, this.customerController.getCustomer());
                 this.ejbFacade.updateProduct(p);
                 this.updateProducts();
                 
