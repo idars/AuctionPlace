@@ -30,6 +30,7 @@ public class ApplicationConfig extends Application {
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(rest.BidFacadeREST.class);
+        resources.add(rest.CorsFilter.class);
         resources.add(rest.CustomerFacadeREST.class);
         resources.add(rest.FeedbackFacadeREST.class);
         resources.add(rest.HelloWorld.class);

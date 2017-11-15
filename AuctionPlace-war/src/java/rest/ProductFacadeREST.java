@@ -5,11 +5,15 @@
  */
 package rest;
 
+import entities.Customer;
 import entities.Product;
+import java.util.Base64;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -37,7 +41,7 @@ public class ProductFacadeREST extends AbstractFacade<Product> {
     public ProductFacadeREST() {
         super(Product.class);
     }
-
+    
     @POST
     @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -52,21 +56,46 @@ public class ProductFacadeREST extends AbstractFacade<Product> {
         super.edit(entity);
     }
 
+    
     @DELETE
     @Path("{id}")
-    public void remove(@PathParam("id") Long id) {
-        super.remove(super.find(id));
+    public void remove(@PathParam("id") Long id, @Context HttpServletRequest request) {
+
+        String[] usernamePassword;
+        usernamePassword = Authentication.authenticate(request.getHeader("Authorization"));
+        
+        //if(false) super.remove(super.find(id));
+        
+        String username, password;
+         try {
+            username = usernamePassword[0];
+            password = usernamePassword[1];
+            Query createNamedQuery = getEntityManager().createNamedQuery("Customer.findByEmail");
+            createNamedQuery.setParameter("email", username);
+        if (createNamedQuery.getResultList().size() > 0) {
+            Customer c = ((Customer) createNamedQuery.getSingleResult());
+             if (c.getPassword().equals(password)) {
+                 super.remove(super.find(id));
+             }
+        }
+
+         } catch (Exception e) {
+             System.out.println ("Can't decode password");
+             //return false;
+         }
+         
     }
 
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Product find(@PathParam("id") Long id) {
+    public Product find(@PathParam("id") Long id, @Context HttpServletResponse response) {
+        response.setHeader("Access-Control-Allow-Origin", "*");
         return super.find(id);
     }
 
     @GET
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public List<Product> findAll(@Context HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", "*");
         return super.findAll();
