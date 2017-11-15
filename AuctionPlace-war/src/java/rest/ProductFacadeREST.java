@@ -23,6 +23,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
@@ -99,6 +100,30 @@ public class ProductFacadeREST extends AbstractFacade<Product> {
     public List<Product> findAll(@Context HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", "*");
         return super.findAll();
+    }
+    
+    @GET
+    @Path("filter")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Product> findFiltered(@QueryParam("customerID") Long customerID) {
+        List<Product> products = findAll();
+        
+        if (products != null && customerID != null) {
+            for (Product p : products) {
+                if (p != null) {
+                    Long ownerID = p.getOwner().getId();
+                    Long bidderID = p.getCurrentBid().getBidder().getId();
+
+                    if (p.getStatus() != Product.Status.PUBLISHED 
+                            || ownerID.equals(customerID) 
+                            || bidderID.equals(customerID)) {
+                        products.remove(p);
+                    }
+                }
+            }
+        }
+        
+        return products;
     }
 
     @GET
