@@ -86,7 +86,7 @@ public class CustomerController implements Serializable {
         
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest)context.getExternalContext().getRequest();
-        request.login(this.getEmail() , this.getPassword());
+        //request.login(this.getEmail() , this.getPassword());
         
         Customer customer = ejbFacade.loginCustomer(this.getEmail(), this.getPassword());
         if(customer != null) {

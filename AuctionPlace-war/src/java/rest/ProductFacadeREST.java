@@ -5,9 +5,9 @@
  */
 package rest;
 
+import entities.Bid;
 import entities.Customer;
 import entities.Product;
-import java.util.Base64;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -26,6 +26,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import util.BidHelper;
 
 
 /**
@@ -49,12 +51,59 @@ public class ProductFacadeREST extends AbstractFacade<Product> {
     public void create(Product entity) {
         super.create(entity);
     }
+    
+    @POST
+    @Path("/login")
+    public Response login(@Context HttpServletRequest request, @Context HttpServletResponse response) {
+        
+        String[] auth = Authentication.authenticate(request.getHeader("Authorization"));
+        String email = auth[0];
+        String password = auth[1];
+        String isValid = "false";
+         
+        try {
+            Query q = getEntityManager().createNamedQuery("Customer.findByEmail");
+            q.setParameter("email", email);  
+            
+            if (q.getResultList().size() > 0) {
+                Customer c = (Customer) q.getSingleResult();
+                if (c.getPassword().equals(password)) {
+                    isValid = "true";
+                }
+            }
+         } catch (Exception e) {
+             System.out.println(e);
+         }
+        return Response.ok(isValid).build();
+    }
 
+    
     @PUT
-    @Path("{id}")
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") Long id, Product entity) {
-        super.edit(entity);
+    @Path("/sendBid")
+    public Response sendBid(@Context HttpServletRequest request, @Context HttpServletResponse response) {
+        //response.setHeader("Access-Control-Allow-Origin", "*");
+        
+        String[] auth = Authentication.authenticate(request.getHeader("Authorization"));
+        String email = auth[0];
+        String password = auth[1];
+        
+        Query createNamedQuery = getEntityManager().createNamedQuery("Product.findById");
+        createNamedQuery.setParameter("id", Long.parseLong(request.getParameter("id")));
+        Product p = (Product) createNamedQuery.getSingleResult();
+        
+        Query q = getEntityManager().createNamedQuery("Customer.findByEmail");
+        q.setParameter("email", email);  
+        Customer c = (Customer) q.getSingleResult();
+        
+        Boolean isValid = false;
+        if(!request.getParameter("amount").equals("")) {
+            isValid = BidHelper.validateBid(p, Double.parseDouble(request.getParameter("amount")));
+            if(isValid) {
+                Bid b = new Bid(Double.parseDouble(request.getParameter("amount")), 0.0, false, c);
+                p.setCurrentBid(b);
+            }
+        }
+        return Response.ok(isValid).build();
     }
 
     
@@ -96,9 +145,9 @@ public class ProductFacadeREST extends AbstractFacade<Product> {
     }
 
     @GET
-    @Produces({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Product> findAll(@Context HttpServletResponse response) {
-        response.setHeader("Access-Control-Allow-Origin", "*");
+        //response.setHeader("Access-Control-Allow-Origin", "*");
         return super.findAll();
     }
     

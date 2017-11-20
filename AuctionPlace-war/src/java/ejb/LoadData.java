@@ -30,7 +30,7 @@ public class LoadData {
     @PostConstruct
     public void createData() {
         Customer user = new Customer("Kari", "kari@gmail.com", "12345678", "12345678", 0.0);
-        Customer user2 = new Customer("Bob", "bob@gmail.com", "ee79976c9380d5e337fc1c095ece8c8f22f91f306ceeb161fa51fecede2c4ba1", "12121212", 0.0);
+        Customer user2 = new Customer("Bob", "bob@gmail.com", "12345678", "12345678", 0.0);
         
         Timestamp timeleft1 = new Timestamp(System.currentTimeMillis() + 500 * 3600000 + 500 * 60000);
         Timestamp timeleft2 = new Timestamp(System.currentTimeMillis() + 200 * 3600000 + 200 * 60000);
